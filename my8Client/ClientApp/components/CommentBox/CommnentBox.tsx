@@ -1,0 +1,75 @@
+﻿import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+import * as Utils from '../../infrastructure/Utils';
+import * as Models from '../../Models'
+import './index.css'
+
+
+interface CommentBoxProps {
+    onChange: Function,
+    OnPostComment: Function,
+    feed: Models.IFeed,
+    defaultValue?: string
+}
+export class CommentBox extends React.Component<CommentBoxProps, {}>{
+    constructor(props) {
+        super(props);
+        let defaultValue = this.props.defaultValue != null ? this.props.defaultValue:''
+        this.state = {
+            value: defaultValue
+        }
+    }
+    public componentDidMount(this) {
+        let commentBox = this.refs.commentBox;
+        if (commentBox != null) {
+            commentBox.focus();
+        }
+    }
+    public componentWillReceiveProps(this, nextProps: CommentBoxProps) {
+            //let value = nextProps.defaultValue != null ? nextProps.defaultValue : ''
+            //this.setState({value: value})
+    }
+    private OnChange(this, e) {
+        //let text = e.target.value;
+        let text = e.target.innerText;
+        if (Utils.isNullOrEmpty(text)) return
+        this.props.onChange(e.target.innerText)
+        this.setState({ value: text });
+        this.props.onChange(text);
+    }
+    private OnKeydown(this, e) {
+        if (e.which === 13 && !e.shiftKey) {
+            e.preventDefault();
+            e.target.innerText = ''
+            this.props.OnPostComment(this.props.feed);
+            this.setState({ value: '' });
+        }
+        else
+        if (e.key === "Enter") {
+            //e.target.textContent = ''
+            ////e.preventDefault();
+            ////this.props.onChange(e.target.textContent)
+            //this.props.OnPostComment(this.props.feed);
+            //this.setState({ value: '' });
+        }
+           
+    }
+    public render(this) {
+        let render = null;
+        render = <div className="comment-box">
+            <div className='comment-box-avatar'>
+                <img src={Utils.GetCurrentUserAvatar()} />
+            </div>
+            {<div ref="commentBox" contentEditable={true} data-placeholder="Type a comment" autoFocus={true} role="textbox" onKeyDown={this.OnKeydown.bind(this)} suppressContentEditableWarning={true} aria-multiline={true} onInput={this.OnChange.bind(this)} className="comment-box-textarea">
+            </div>}
+            {/*<input type="text" placeholder="Type a comment" value={this.state.value} onChange={this.OnChange.bind(this)} onKeyDown={this.OnPostComment.bind(this)} />*/}
+            <div className="comment-box-icon">
+                <a className="comment-box-camera" href="#"><i className="fa fa-camera"></i></a>
+                <a className="comment-box-emoji" href="#"><i className="fa fa-smile-o"></i></a>
+            </div>
+
+            
+        </div>
+        return render;
+    }
+}

@@ -1,0 +1,62 @@
+.input-select {
+    position: relative;
+    z-index: 0;
+}
+
+    .input-select > select {
+        width: 100%;
+        margin: 0;
+        padding: 5px 9px;
+        padding-right: 24px;
+        color: rgba(0,0,0,.87);
+        background-color: #fff;
+        outline: none !important;
+        box-shadow: none;
+        border: 1px solid rgba(0,0,0,.12);
+        border-radius: 1px;
+        line-height: 1.3;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+    }
+
+    .input-select.blue-screen > select {
+        background-color: #0084ff;
+        border-color: #0084ff;
+        color: #fff;
+    }
+
+    .input-select > svg {
+        position: absolute;
+        bottom: 0;
+        right: 5px;
+        pointer-events: none;
+    }
+
+    .input-select.input-select-action {
+    }
+
+        .input-select.input-select-action .input-select-action-wrapper {
+            position: absolute;
+            width: 100%;
+            bottom: 35px;
+            max-height: 200px;
+            overflow: hidden;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #e0e6ed;
+            box-shadow: 0 0 10px 0 rgba(77,77,77,.2);
+            display: none;
+        }
+
+            .input-select.input-select-action .input-select-action-wrapper.is_selecting {
+                display: block;
+            }
+
+            .input-select.input-select-action .input-select-action-wrapper .input-select-action-item {
+                padding: 8px 16px;
+            }
+
+                .input-select.input-select-action .input-select-action-wrapper .input-select-action-item:hover {
+                    background: #f6f7fa;
+                }

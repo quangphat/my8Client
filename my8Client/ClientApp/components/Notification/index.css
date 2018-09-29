@@ -1,0 +1,101 @@
+﻿.top-right-notification {
+    position: fixed;
+    right: 10px;
+    top: 70px;
+    width: 320px;
+    z-index: 9999999;
+}
+.notifcation-body{
+    /*display:inline-flex;*/
+}
+.notification-area {
+    transition: max-height .4s cubic-bezier(.8,0,.2,.8);
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.notification-content {
+    background-color: #fff;
+    border-color: #e0e6ed;
+    display: inline-block;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #e0e6ed;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.small-close-button {
+    position: absolute;
+    right: 1px;
+    top: 3px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+}
+
+    .small-close-button:hover {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        opacity: .5;
+    }
+
+.p-t-xs {
+    padding-top: .25rem !important;
+}
+
+.notifi-alert {
+    flex: 0 0 50px;
+    width: 50px;
+}
+
+.notification-container {
+    height: auto;
+    position: fixed;
+    right: 10px;
+    top: 70px;
+    width: 320px;
+    padding: 0;
+    z-index: 9999999;
+}
+.notification {
+    box-sizing: border-box;
+    padding: 15px 15px 15px 58px;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #ccc;
+    box-shadow: 0 0 12px #999;
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 1.2em;
+    position: relative;
+    opacity: 0.9;
+    margin-top: 15px;
+}
+.notification-message {
+    word-break: break-word;
+    margin-left: 40px;
+}
+.notification-container .notification {
+    overflow: hidden;
+    box-shadow: none;
+    opacity: 1;
+    font-size: 14px;
+    border-radius: 2px;
+    width: 100%;
+    padding: 10px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #e1e2e3;
+}

@@ -1,0 +1,14 @@
+@model my8Client.Models.AccountModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="react-app">Loading...</div>
+
+@section scripts {
+    <script type="text/javascript">
+        document.account = @Html.Raw(Model != null ? Model.AccountJson : "null");
+
+    </script>
+    <script src="~/dist/main.js" asp-append-version="true"></script>
+}

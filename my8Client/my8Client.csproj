@@ -1,0 +1,105 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview2-final" />
+    <PackageReference Include="MsgPack.Cli" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Content Remove="ClientApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\infrastructure\Utils.tsx" />
+    <None Remove="ClientApp\Layout.tsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\components\" />
+    <Folder Include="ClientApp\App\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\animated.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\core.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\icons.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\larger.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\list.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\path.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\less\variables.less" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <None Include="wwwroot\assets\fonts\font-awesome-4.7.0\scss\_variables.scss" />
+    <None Include="wwwroot\assets\images\iconS.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\infrastructure\Utils.tsx" />
+    <TypeScriptCompile Include="ClientApp\Layout.tsx" />
+  </ItemGroup>
+
+  <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+
+    <!-- In development, the dist files won't exist on the first run or when cloning to
+         a different machine, so rebuild them if not already present. -->
+    <Message Importance="high" Text="Performing first-run Webpack build..." />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec Command="npm install" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod" />
+    <Exec Command="node node_modules/webpack/bin/webpack.js --env.prod" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

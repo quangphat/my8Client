@@ -1,0 +1,21 @@
+.tags-search-result {
+    padding: 0px;
+    width: 360px;
+    list-style-type: none;
+    background-color: #fff;
+    position: absolute;
+    border: 1px solid #e1e2e3;
+    max-height: 200px;
+    overflow: auto;
+    z-index: 1000;
+}
+
+    .tags-search-result .tags-search-item {
+        border: 1px solid #f3f6f8;
+        border-top: none;
+        cursor: pointer;
+    }
+
+        .tags-search-result .tags-search-item:hover {
+            background-color: #f3f6f8;
+        }

@@ -1,0 +1,13 @@
+﻿.content-editable-body {
+    min-height: 70px;
+    display:inline-block;
+    white-space:pre;
+    white-space:pre-wrap;
+    white-space:pre-line;
+}
+.content-editable-body:focus {
+    outline: none !important;
+}
+.content-editable {
+    background-color: #fff;
+}

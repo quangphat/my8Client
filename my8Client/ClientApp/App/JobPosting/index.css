@@ -1,0 +1,80 @@
+﻿.job-posting-container {
+    width: 70%;
+    padding: 30px 0;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 10%;
+}
+#tags {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+     border-radius: 10px; 
+    box-shadow: 1px 1px 4px #CCC inset;
+     padding: 10px; 
+    width: 100%;
+    background: #fafafa;
+    margin: auto;
+}
+#tag-typer {
+    outline: none;
+    border: none;
+    padding: 6px;
+    margin: 3px;
+    margin-right: -25px;
+    width: 100px;
+    background-color: transparent;
+    font-size: 14px;
+    color: #333;
+}
+#tag-typer {
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+
+.tag {
+    display: inline-block;
+    background: #005587;
+    color: #FFF;
+    padding: 2px 8px 4px 5px;
+    margin-right:10px;
+    margin-bottom:10px;
+    font: normal 14px sans-serif;
+    position: relative;
+    cursor: default;
+    box-shadow: 1px 1px 0 rgba(0,0,0,.2);
+    -webkit-transform-origin: 0% 50%;
+    -webkit-animation: swing 1s;
+    -o-animation: swing 1s;
+    animation: swing 1s;
+    border-radius: 3px;
+}
+.readOnly-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-shadow: none;
+    outline: 0;
+    height: 32px;
+    position: relative;
+    z-index: 2;
+    background: url(../../../wwwroot/assets/images/iconS.svg) top -311px right 1px no-repeat;
+    box-sizing: border-box;
+    border: 0;
+    width: 100%;
+    border: 1px solid #b0b0b0;
+    padding: 0 32px 0 10px;
+    transition: box-shadow .15s;
+    color: rgba(0,0,0,.9);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+#job-post-form select {
+    height: 34px;
+    background-position: top -40px right 2px;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}

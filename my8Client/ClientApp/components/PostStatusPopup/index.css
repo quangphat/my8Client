@@ -1,0 +1,165 @@
+﻿.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1050; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    border-radius: 2px !important;
+}
+
+.opening {
+    display: block !important;
+}
+
+.modal.show .modal-dialog {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+}
+
+.popup-header {
+    max-height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    padding: 5px;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    border-bottom: 1px solid #e9ecef;
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+}
+
+.modal-title {
+    font-size: 18px;
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+a.popup-close {
+    color: #000;
+}
+
+.popup-header .popup-close {
+    top: 0px;
+    position: absolute;
+    right: 5px;
+    font-size: 20px;
+    font-weight: 100;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.popup-footer {
+    border-top: 1px solid #e9ecef;
+    padding: 5px;
+    float: right;
+}
+
+    .popup-footer > a {
+        float: right;
+    }
+
+a.primary {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: #365899;
+    color: white;
+    text-decoration: none;
+}
+
+.modal-body {
+    padding: 5px 10px;
+}
+
+    .modal-body .status-with-friend {
+        position: relative;
+        margin-left: 0px;
+    }
+
+.status-with-friend label {
+    background: #e2e8f6;
+    padding: 7px 5px;
+}
+
+.status-with-friend .status-select-friend {
+    position: absolute;
+    left: 55px;
+    top: 0px;
+    width: 100%;
+    padding: 0px;
+    margin-left: 5px;
+}
+
+.status-select-friend input {
+    width: 85%;
+    padding: 5px;
+}
+
+[contenteditable]:empty:before {
+    content: attr(data-placeholder);
+    color: grey;
+    display: inline-block;
+}
+
+.text-editor {
+    min-height: 50px;
+    /*margin-top: -5px;
+    margin-left: -10px;
+    margin-right: -10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;*/
+}
+
+
+.ml-5 {
+    margin-left: 5px !important;
+}
+.tags-search-item .tag-header-info {
+    padding: 15px 10px;
+}
+
+.tags-search-item .avatar {
+    float: left;
+    margin-top: 10px;
+}
+
+.tag-header-info .displayname {
+    position: relative;
+    color: #365899;
+    margin-left: 10px;
+    width: calc(100% - 48px);
+    float: left;
+    box-sizing: border-box;
+    vertical-align: middle;
+    line-height: 5px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.tag-header-info .workas {
+    position: relative;
+    top: 7px;
+    line-height: 20px;
+    font-weight: 600;
+    margin-left: 10px;
+}
