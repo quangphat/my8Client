@@ -12,13 +12,14 @@ using my8Client.Models;
 
 namespace my8Client.Controllers
 {
+    [Route("StatusPosts")]
     public class StatusPostController  : BaseController
     {
         public StatusPostController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpPost]
-        [Route("/StatusPost/Create")]
+        [Route("Create")]
         public async Task<IActionResult> Create([FromBody] StatusPost model)
         {
             if (string.IsNullOrWhiteSpace(model.Content)) return Json(false);
@@ -36,7 +37,7 @@ namespace my8Client.Controllers
             {
                 return ToResponse(false);
             }
-            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "/api/StatusPost/create", HttpMethod.Post,model);
+            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "StatusPosts/create", HttpMethod.Post,model);
             return ToResponse(result);
         }
 

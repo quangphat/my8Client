@@ -12,19 +12,20 @@ using my8Client.Models;
 
 namespace my8Client.Controllers
 {
+    [Route("jobFunctions")]
     public class JobFunctionController  : BaseController
     {
         public JobFunctionController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpGet]
-        [Route("/jobfunction/search/{searchStr}")]
+        [Route("{searchStr}")]
         public async Task<IActionResult> Get(string searchStr)
         {
             if (string.IsNullOrWhiteSpace(searchStr))
                 return ToResponse(null);
             string formated = searchStr.NonUnicode();
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<JobFunction>>>(Request, _clientConfig, $"/api/JobFunction/search/{formated}", HttpMethod.Get);
+            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<JobFunction>>>(Request, _clientConfig, $"/JobFunctions/search/{formated}", HttpMethod.Get);
             return ToResponse(result);
         }
 

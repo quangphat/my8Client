@@ -12,20 +12,21 @@ using my8Client.Models;
 
 namespace my8Client.Controllers
 {
+    [Route("JobPosts")]
     public class JobPostController  : BaseController
     {
         public JobPostController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpPost]
-        [Route("/JobPost/create")]
+        [Route("create")]
         public async Task<IActionResult> Create([FromBody] JobPost model)
         {
             if (string.IsNullOrWhiteSpace(model.Content)) return Json(false);
             model.PostBy = AutoMapper.Mapper.Map<Author>(_currentProcess.CurrentAccount.Account);
             model.PersonId = _currentProcess.CurrentAccount.Account.PersonId;
             model.PostingAsType = ActionAsType.Person;
-            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, $"/api/JobPost/create", HttpMethod.Post, model);
+            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, $"/JobPosts/create", HttpMethod.Post, model);
             return ToResponse(result);
         }
 

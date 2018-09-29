@@ -7,7 +7,7 @@ export const JobRepository = {
         })
     },
     GetJobFunction: async (searchStr) => {
-        return Fetch.Get(`/jobfunction/search/${searchStr}`, null).then(response => {
+        return Fetch.Get(`/jobfunctions/${encodeURI(searchStr)}`, null).then(response => {
             return response;
         })
     },

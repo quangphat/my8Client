@@ -38,6 +38,7 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, PostS
             statusPostText: null,
             mouseDown: null
         };
+        this.handleOnMouseDown = this.handleOnMouseDown.bind(this)
         this.handleOnClickOutside = this.handleOnClickOutside.bind(this)
     }
     public componentWillMount() {
@@ -48,7 +49,7 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, PostS
         document.removeEventListener('mousedown', this.handleOnClickOutside, false);
         document.removeEventListener('mouseup', this.handleOnClickOutside, false);
     }
-    private handleOnMouseDown( e) {
+    private handleOnMouseDown(this, e) {
         this.setState({ mouseDown:e})
     }
     private handleOnClickOutside(this, e) {

@@ -59,7 +59,6 @@ export class Home extends React.Component<{}, HomeStates> {
         if (now - lastInit > 600000)//10 minutes
         {
             FeedRepository.InitBroadCast().then(response => {
-                debugger
                 if (response.success == true) {
                     Utils.setLastInitBroadCastTime();
                 }

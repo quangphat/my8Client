@@ -24,12 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\Input\Input.tsx" />
     <None Remove="ClientApp\infrastructure\Utils.tsx" />
     <None Remove="ClientApp\Layout.tsx" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\components\" />
     <Folder Include="ClientApp\App\" />
   </ItemGroup>
 
@@ -68,6 +68,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\Input\Input.tsx" />
     <TypeScriptCompile Include="ClientApp\infrastructure\Utils.tsx" />
     <TypeScriptCompile Include="ClientApp\Layout.tsx" />
   </ItemGroup>

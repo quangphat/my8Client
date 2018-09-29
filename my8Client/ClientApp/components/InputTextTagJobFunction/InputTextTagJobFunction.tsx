@@ -84,7 +84,7 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
         }
         this.getJobFunctions(value)
             .then((data: IJobFunction[]) => {
-                this.setState({ search: null, jobFunctions: data, selecting_index: 0, is_selecting: true })
+                this.setState({ search: '', jobFunctions: data, selecting_index: 0, is_selecting: true })
             })
     }
     private handleOnChange(e) {
@@ -102,8 +102,6 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
     private handleOnBlur(this) {
         this.setState({ search: '' });
         let refJobFunction = this.refs.refJobFunction
-        refJobFunction.value = '';
-        refJobFunction.defaultValue = ''
     }
     private handleOnKeyDown(this, e, value: string) {
         if (e.key == 'Enter') {
@@ -165,8 +163,6 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
         this.props.onSelect(value)
         this.setState({ search: '', is_selecting: false });
         let refJobFunction = this.refs.refJobFunction
-        refJobFunction.value = '';
-        refJobFunction.defaultValue = ''
         this.handleOnFocus()
     }
     private onSwitch() {
@@ -198,15 +194,14 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
         }
         return render;
     }
-    public render(this) {
+    public render() {
         let render = null;
         let status = this.state.allowInput;
-        let jobFunctions = this.state.jobFunctions as IJobFunction[]
+        let jobFunctions = this.state.jobFunctions
         let is_selecting = this.state.is_selecting
-        let search = this.state.search as string
-        let selecting_index = this.state.selecting_index as number
+        let search = this.state.search
+        let selecting_index = this.state.selecting_index
         let renderListFunction = null
-
         if (is_selecting) {
             let canSelectIndexByKey = false
 
