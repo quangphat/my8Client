@@ -7,7 +7,11 @@ interface NotificationProps {
     timeOut: number,
     content: string
 }
-export class Notification extends React.Component<NotificationProps, {}> {
+interface NotificationStates {
+    timeOut: number,
+    hidden: boolean
+}
+export class Notification extends React.Component<NotificationProps, NotificationStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,13 +20,13 @@ export class Notification extends React.Component<NotificationProps, {}> {
         };
     }
 
-    public componentDidMount(this) {
+    public componentDidMount() {
         setTimeout(() => {
             this.setState({ hidden: true })
         }, this.props.timeOut)
     }
 
-    public render(this) {
+    public render() {
         let render = null;
         let hidden = this.state.hidden;
         if (hidden) return null

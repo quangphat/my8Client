@@ -3,7 +3,9 @@ import { RouteComponentProps } from 'react-router';
 import { PersonRepository } from '../../repositories/PersonRepository';
 import { ContentEditable } from '../ContentEditable/ContentEditable';
 import * as AppIcon from '../../AppIcon';
-import * as Models from '../../Models'
+import { IStatusPost } from '../../Models/IStatusPost'
+import { IShortPerson } from '../../Models/IShortPerson'
+
 import * as Utils from '../../infrastructure/Utils';
 import './index.css';
 
@@ -13,33 +15,40 @@ interface PostStatusPopupProps {
     onClose: Function,
     onChange: Function,
     onPost: Function
-
 }
-export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
+interface PostStatusPopupStates {
+    isOpening: boolean,
+    friends: any,
+    isShowListFriend: false,
+    taggingFriends: any,
+    tagsSelected: any,
+    statusPostText: null,
+    mouseDown: null
+}
+export class PostStatusPopup extends React.Component<PostStatusPopupProps, PostStatusPopupStates>{
     constructor(props) {
         super(props);
         let isOpening = this.props.isOpening != null ? this.props.isOpening : false
         this.state = {
             isOpening: isOpening,
-            Friends: [],
+            friends: [],
             isShowListFriend: false,
-            TaggingFriends: [],
-            TagsSelected: [],
+            taggingFriends: [],
+            tagsSelected: [],
             statusPostText: null,
             mouseDown: null
         };
         this.handleOnClickOutside = this.handleOnClickOutside.bind(this)
-        this.handleOnMouseDown = this.handleOnMouseDown.bind(this)
     }
-    public componentWillMount(this) {
+    public componentWillMount() {
         document.addEventListener('mousedown', this.handleOnMouseDown, false);
         document.addEventListener('mouseup', this.handleOnClickOutside, false);
     }
-    public componentWillUnmount(this) {
+    public componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleOnClickOutside, false);
         document.removeEventListener('mouseup', this.handleOnClickOutside, false);
     }
-    private handleOnMouseDown(this, e) {
+    private handleOnMouseDown( e) {
         this.setState({ mouseDown:e})
     }
     private handleOnClickOutside(this, e) {
@@ -53,10 +62,10 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
                 
         }
     }
-    public componentDidMount(this) {
+    public componentDidMount() {
 
     }
-    private getTopInteractiveFriends(this) {
+    private getTopInteractiveFriends() {
         return PersonRepository.GetTopFriend().then(response => {
             if (response.error == null) {
                 return response.data;
@@ -64,39 +73,44 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
             else return null;
         })
     }
-    private searchFriend(this, searchStr: string): Models.IShortPerson[] {
+    private searchFriend(searchStr: string) {
         if (Utils.isNullOrEmpty(searchStr)) return null;
-        let friends = this.state.Friends as Models.IShortPerson[]
+        let friends = this.state.friends
         let results = [];
         results = friends.filter(p => p.DisplayName.toLowerCase().includes(searchStr));
         return results;
     }
-    public componentWillReceiveProps(this, nextProps: PostStatusPopupProps) {
-        let isOpening = nextProps.isOpening != null ? nextProps.isOpening : false
-        let friends = this.state.Friends
-        if (isOpening) {
-            if (friends == null || friends.length == 0) {
-                friends = friends.concat(Utils.getFriends());
-                this.setState({ Friends: friends });
+    public componentWillReceiveProps(nextProps: PostStatusPopupProps) {
+        if (this.props.isOpening != nextProps.isOpening) {
+            let isOpening = nextProps.isOpening != null ? nextProps.isOpening : false
+            let friends = this.state.friends
+            if (isOpening) {
+                if (friends == null || friends.length == 0) {
+                    friends = friends.concat(Utils.getFriends());
+                    this.setState({ friends: friends });
+                }
             }
+            this.setState({ isOpening: isOpening })
         }
-        this.setState({ isOpening: isOpening })
+        
     }
-    private handleClose(this) {
+    private handleClose() {
         this.props.onClose()
-        this.setState({ TaggingFriends: null, TagsSelected: null });
+        this.setState({ taggingFriends: null, tagsSelected: null });
     }
-    private onChange(this, value) {
+    private onChange( value) {
         this.setState({ statusPostText: value })
     }
-    private onPost(this) {
-        let statusPost = new Object as Models.IStatusPost;
+    private onPost() {
+        
         let statusPostText = this.state.statusPostText;
         if (Utils.isNullOrEmpty(statusPostText)) return;
-        statusPost.Content = statusPostText;
-        statusPost.PersonTags = this.state.TagsSelected
+        let statusPost = {
+            Content: statusPostText,
+            PersonTags: this.state.tagsSelected
+        }
         this.props.onPost(statusPost);
-        this.setState({ statusPostText: null, TagsSelected: null });
+        this.setState({ statusPostText: null, tagsSelected: null });
     }
     //private onSearchingFriend(this, e) {
     //    let searchStr = e.target.value.toLowerCase();
@@ -108,29 +122,29 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
     //        this.setState({ isShowListFriend: false, TaggingFriends: null });
     //    }
     //}
-    private handleOnGetListFriend(this, friend: Models.IShortPerson) {
+    private handleOnGetListFriend( friend: IShortPerson) {
         return new Promise(resolve => {
-            let friends = this.state.Friends as Models.IShortPerson[]
+            let friends = this.state.friends
             resolve(friends);
         })
     }
-    private onSelectTag(this, item) {
-        let TagsSelected = this.state.TagsSelected as Models.IShortPerson[]
-        if (TagsSelected == null) TagsSelected = [];
+    private onSelectTag(item) {
+        let tagsSelected = this.state.tagsSelected
+        if (tagsSelected == null) tagsSelected = [];
         if (item) {
-            let exists = TagsSelected.findIndex(p => p.Id == item.Id);
+            let exists = tagsSelected.findIndex(p => p.Id == item.Id);
             if (exists < 0) {
-                TagsSelected.push(item);
-                this.setState({ TagsSelected: TagsSelected });
+                tagsSelected.push(item);
+                this.setState({ tagsSelected: tagsSelected });
             }
         }
     }
-    private renderTaggingFriends(this) {
-        let taggingFriends = this.state.TaggingFriends as Models.IShortPerson[]
+    private renderTaggingFriends() {
+        let taggingFriends = this.state.taggingFriends
         if (taggingFriends == null) return null;
         let render = <ul className="tags-search-result">{
             taggingFriends.map((item, index) => {
-                return <li key={index} className="tags-search-item" onClick={this.onSelectTag.bind(this, item)}>
+                return <li key={index} className="tags-search-item" onClick={()=>this.onSelectTag(item)}>
                     <div className="ml-5">
                         <img className="avatar" src="../../../../assets/images/avatar/avatar4.png" />
                         <div className="tag-header-info">
@@ -144,8 +158,8 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
         </ul>
         return render;
     }
-    private renderTaggedFriend(this) {
-        let TagsSelected = this.state.TagsSelected as Models.IShortPerson[]
+    private renderTaggedFriend() {
+        let TagsSelected = this.state.tagsSelected
         let render = null;
         if (TagsSelected != null && TagsSelected.length > 0) {
             if (TagsSelected.length < 3)
@@ -164,7 +178,7 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
         }
         return render;
     }
-    public render(this) {
+    public render() {
         let isShowListFriend = this.state.isShowListFriend;
         let render = null
         let className = this.state.isOpening == true ? ' opening' : ''
@@ -194,14 +208,14 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, {}>{
                         <div className="row status-with-friend">
                             <label>Bạn bè:</label>
                             <div className="status-select-friend">
-                                <Components.InputTextTagFriend onSelect={this.onSelectTag.bind(this)} />
+                                <Components.InputTextTagFriend onSelect={(e)=>this.onSelectTag(e)} />
                             </div>
                         </div>
 
                     </div>
 
                     <div className="popup-footer">
-                        <a className="primary" onClick={this.onPost.bind(this)}>Đăng</a>
+                        <a className="primary" onClick={()=>this.onPost()}>Đăng</a>
                     </div>
 
                 </div>

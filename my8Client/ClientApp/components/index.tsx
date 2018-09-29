@@ -8,4 +8,5 @@ export { MultiSelect } from './MultiSelect/MultiSelect';
 export { InputTextTagFriend } from './InputTextTagFriend/InputTextTagFriend';
 export { InputTextTagJobFunction } from './InputTextTagJobFunction/InputTextTagJobFunction';
 export { Combobox } from './Combobox/Combobox';
+export { Input } from './Input/Input';
 

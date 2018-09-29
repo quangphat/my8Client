@@ -20,12 +20,20 @@ interface ComboboxProps {
     allowSelect?: boolean,
     is_opening?: boolean
 }
-
+interface ComboboxStates {
+    defaultValue: string,
+    data: Array<object>,
+    valueFieldName: string,
+    displayFieldName: string,
+    isBlueScreen: boolean,
+    is_selecting: boolean,
+    allowSelect: boolean
+}
 interface ComboboxOptionProps {
     key: string,
     data: object
 }
-export class Combobox extends React.Component<ComboboxProps, {}> {
+export class Combobox extends React.Component<ComboboxProps, ComboboxStates> {
     constructor(props) {
         super(props)
 
@@ -52,43 +60,40 @@ export class Combobox extends React.Component<ComboboxProps, {}> {
             valueFieldName: valueFieldName,
             displayFieldName: displayFieldName,
             isBlueScreen: this.props.isBlueScreen != null ? this.props.isBlueScreen : true,
-            select_is_selecting: is_opening,
+            is_selecting: is_opening,
             allowSelect: allowSelect
         }
-
-        this.handleOnChange = this.handleOnChange.bind(this)
-        this.callOnChange = this.callOnChange.bind(this)
-        this.handleOnClickSelectAcion = this.handleOnClickSelectAcion.bind(this)
     }
     
-    componentDidMount(this) {
+    componentDidMount() {
         this.callOnChange(this.state.defaultValue)
     }
-    public componentWillReceiveProps(this, nextProps: ComboboxProps) {
-        this.setState({ select_is_selecting: nextProps.is_opening });
+    public componentWillReceiveProps(nextProps: ComboboxProps) {
+        if (this.props.is_opening != nextProps.is_opening)
+            this.setState({ is_selecting: nextProps.is_opening });
     }
-    private handleOnChange(this, event) {
+    private handleOnChange(event) {
         this.callOnChange(event.target.value)
     }
-    private handleOnSelectAction(this, option: ComboboxOptionProps) {
+    private handleOnSelectAction(option: ComboboxOptionProps) {
         if (this.props.onSelect != null) {
             this.props.onSelect(Utils.deepClone(option.data))
         }
 
-        this.setState({ select_is_selecting: false })
+        this.setState({ is_selecting: false })
     }
 
-    private callOnChange(this, value) {
+    private callOnChange(value) {
         if (this.props.onChange != null) {
             this.props.onChange(value)
         }
     }
 
-    private handleOnClickSelectAcion(this) {
-        this.setState({ select_is_selecting: !this.state.select_is_selecting })
+    private handleOnClickSelectAcion() {
+        this.setState({ is_selecting: !this.state.is_selecting })
     }
 
-    public render(this) {
+    public render() {
         let className = 'input-select'
         let classNameSvg = ''
 
@@ -105,7 +110,7 @@ export class Combobox extends React.Component<ComboboxProps, {}> {
             ? this.renderSelectAction(className, classNameSvg)
             : this.renderDefault(className, classNameSvg)
     }
-    private renderDefault(this, className: string, classNameSvg: string) {
+    private renderDefault(className: string, classNameSvg: string) {
         let classNameInside = ''
 
         if (this.props.classNameInside) {
@@ -113,7 +118,8 @@ export class Combobox extends React.Component<ComboboxProps, {}> {
         }
 
         return <div className={className}>
-            <select className={classNameInside} onChange={this.handleOnChange} defaultValue={this.state.defaultValue} disabled={!this.state.allowSelect} >
+            <select className={classNameInside} onChange={(e) => this.handleOnChange(e)}
+                defaultValue={this.state.defaultValue} disabled={!this.state.allowSelect} >
                 {this.state.data.map((a: ComboboxOptionProps, index: number) =>
                     <option key={a.key} value={a.data[this.state.valueFieldName]}>
                         {a.data[this.state.displayFieldName]}
@@ -125,13 +131,13 @@ export class Combobox extends React.Component<ComboboxProps, {}> {
             </svg>
         </div>
     }
-    private renderSelectAction(this, className: string, classNameSvg: string) {
+    private renderSelectAction( className: string, classNameSvg: string) {
         return <div className={className + ' input-select-action'}>
-            <a className='block-display' onClick={this.handleOnClickSelectAcion}>{this.props.selectButton()}</a>
-            <div className={'input-select-action-wrapper text-smaller' + (this.state.select_is_selecting ? ' is_selecting' : '')}>
+            <a className='block-display' onClick={()=>this.handleOnClickSelectAcion()}>{this.props.selectButton()}</a>
+            <div className={'input-select-action-wrapper text-smaller' + (this.state.is_selecting ? ' is_selecting' : '')}>
                 {this.state.data.map((a: ComboboxOptionProps, index: number) =>
                     <div key={a.key}
-                        onClick={this.handleOnSelectAction.bind(this, a)}
+                        onClick={()=>this.handleOnSelectAction(a)}
                         className='input-select-action-item pointer'>
                         {a.data[this.state.displayFieldName]}
                     </div>)}

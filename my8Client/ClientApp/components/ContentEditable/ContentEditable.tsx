@@ -35,18 +35,17 @@ export class ContentEditable extends React.Component<ContentEditableProps, {}>{
 
         return text;
     }
-    private OnChange(this, e) {
+    private OnChange(e) {
         var text = this.getText(e.target);
         if (this.props.onChange != null)
             this.props.onChange(text)
     }
     private onPaste(ev) {
-        debugger
         ev.preventDefault();
         var text = ev.clipboardData.getData("text");
         document.execCommand('insertText', false, text);
     }
-    public render(this) {
+    public render() {
         let render = null;
         let border = this.props.hasBorder ? 'border' : '';
         render = <div className={`content-editable ${border} pd5`}>

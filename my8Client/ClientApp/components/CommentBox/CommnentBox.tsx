@@ -11,7 +11,10 @@ interface CommentBoxProps {
     feed: Models.IFeed,
     defaultValue?: string
 }
-export class CommentBox extends React.Component<CommentBoxProps, {}>{
+interface CommentBoxStates {
+    value: string
+}
+export class CommentBox extends React.Component<CommentBoxProps, CommentBoxStates>{
     constructor(props) {
         super(props);
         let defaultValue = this.props.defaultValue != null ? this.props.defaultValue:''
@@ -25,11 +28,11 @@ export class CommentBox extends React.Component<CommentBoxProps, {}>{
             commentBox.focus();
         }
     }
-    public componentWillReceiveProps(this, nextProps: CommentBoxProps) {
+    public componentWillReceiveProps(nextProps: CommentBoxProps) {
             //let value = nextProps.defaultValue != null ? nextProps.defaultValue : ''
             //this.setState({value: value})
     }
-    private OnChange(this, e) {
+    private OnChange(e) {
         //let text = e.target.value;
         let text = e.target.innerText;
         if (Utils.isNullOrEmpty(text)) return
@@ -37,7 +40,7 @@ export class CommentBox extends React.Component<CommentBoxProps, {}>{
         this.setState({ value: text });
         this.props.onChange(text);
     }
-    private OnKeydown(this, e) {
+    private OnKeydown(e) {
         if (e.which === 13 && !e.shiftKey) {
             e.preventDefault();
             e.target.innerText = ''
@@ -54,13 +57,19 @@ export class CommentBox extends React.Component<CommentBoxProps, {}>{
         }
            
     }
-    public render(this) {
+    public render() {
         let render = null;
         render = <div className="comment-box">
             <div className='comment-box-avatar'>
                 <img src={Utils.GetCurrentUserAvatar()} />
             </div>
-            {<div ref="commentBox" contentEditable={true} data-placeholder="Type a comment" autoFocus={true} role="textbox" onKeyDown={this.OnKeydown.bind(this)} suppressContentEditableWarning={true} aria-multiline={true} onInput={this.OnChange.bind(this)} className="comment-box-textarea">
+            {<div ref="commentBox" contentEditable={true}
+                data-placeholder="Type a comment"
+                autoFocus={true} role="textbox"
+                onKeyDown={(e)=>this.OnKeydown(e)}
+                suppressContentEditableWarning={true}
+                aria-multiline={true}
+                onInput={(e)=>this.OnChange(e)} className="comment-box-textarea">
             </div>}
             {/*<input type="text" placeholder="Type a comment" value={this.state.value} onChange={this.OnChange.bind(this)} onKeyDown={this.OnPostComment.bind(this)} />*/}
             <div className="comment-box-icon">

@@ -2,21 +2,34 @@
 import { RouteComponentProps } from 'react-router';
 import * as Utils from '../../infrastructure/Utils';
 import * as AppIcons from '../../AppIcon'
-import * as Models from '../../Models'
+import { IFeed } from '../../Models/IFeed'
+import { IShortFeed } from '../../Models/IShortFeed'
+import { IComment } from '../../Models/IComment'
+import { IFeedLike } from '../../Models/IFeedLike'
+import { IAuthor } from '../../Models/IAuthor'
+import { IShortPerson } from '../../Models/IShortPerson'
+import { INotification } from '../../Models/INotification'
 import { CommentBox } from '../CommentBox/CommnentBox';
 import * as Enums from '../../Enum/Enum';
 import { CommentRepository } from '../../repositories/CommentRepository'
 import { FeedRepository } from '../../repositories/FeedRepository'
 import { PropTypes } from 'prop-types';
 interface FeedBoxProps {
-    Feed: Models.IFeed,
+    Feed: IFeed,
     onPersonComment: Function
 }
-export class FeedBox extends React.Component<FeedBoxProps, {}>{
+interface FeedBoxStates {
+    feed: IFeed,
+    renderComments: boolean,
+    Comments: IComment[],
+    commentSkip: number,
+    currentUserComment: string
+}
+export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
     constructor(props) {
         super(props);
         this.state = {
-            Feed: this.props.Feed,
+            feed: this.props.Feed,
             renderComments: false,
             Comments: [],
             commentSkip: 0,
@@ -27,59 +40,65 @@ export class FeedBox extends React.Component<FeedBoxProps, {}>{
         ShowMessage: PropTypes.func,
         _sendCommentNotify: PropTypes.func
     }
-    public componentDidMount(this) {
+    public componentDidMount() {
 
     }
-    private renderFeedComments(this) {
+    private renderFeedComments() {
         let render = null;
         if (this.state.renderComments) {
             render = ''
         }
         return render;
     }
-    private onInputComment(this, value) {
+    private onInputComment(value) {
         this.setState({ currentUserComment: value })
     }
-    private OnPostComment(this, feed: Models.IFeed) {
+    private OnPostComment(feed: IFeed) {
         let currentUserComment = this.state.currentUserComment;
         if (currentUserComment == null || feed == null)
             return;
-        let comment = new Object as Models.IComment;
-        comment.FeedId = feed.Id;
-        comment.FeedType = feed.PostType
-        comment.Content = currentUserComment;
-        comment.Feed = new Object as Models.IShortFeed
-        comment.Feed.PersonId = feed.PersonId;
-        comment.Feed.PostBy = feed.PostBy;
-        comment.Feed.PostingAs = feed.PostingAs;
+        let comment = {
+            FeedId: feed.Id,
+            FeedType: feed.PostType,
+            Content: currentUserComment,
+            Feed: {
+                PersonId: feed.PersonId,
+                PostBy: feed.PostBy,
+                PostingAs: feed.PostingAs
+            }
+        } as IComment;
         CommentRepository.CreateComment(comment).then(response => {
             if (response.error == null) {
-                let commentNotify = response.data as Models.INotification;
+                let commentNotify = response.data as INotification;
                 comment.Id = commentNotify.CommentId;
-                comment.Commentator = new Object as Models.IAuthor
-                comment.Commentator.AuthorId = commentNotify.AuthorId;
-                comment.Commentator.AuthorTypeId = commentNotify.AuthorType;
-                comment.Commentator.DisplayName = commentNotify.AuthorDisplayName;
-                comment.CommentTimeUnix = commentNotify.NotifyTimeUnix;
-                let Comments = this.state.Comments as Models.IComment[]
+                comment.Commentator = {
+                    AuthorId: commentNotify.AuthorId,
+                    AuthorTypeId: commentNotify.AuthorType,
+                    DisplayName: commentNotify.AuthorDisplayName,
+                    Avatar: null
+                }
+
+                let Comments = this.state.Comments
                 Comments.push(comment);
                 //let feed = this.state.Feed as Models.IFeed;
                 feed.Comments = feed.Comments + 1;
-                this.setState({ Comments: Comments, Feed: feed });
+                this.setState({ Comments: Comments, feed: feed });
                 this.context._sendCommentNotify(commentNotify);
             }
         })
     }
-    private onLikeFeed(this, feed: Models.IFeed) {
-        let feedlike = new Object as Models.IFeedLike;
-        feedlike.Liked = !feed.Liked;
-        feedlike.FeedId = feed.Id;
-        feedlike.FeedType = feed.PostType;
-        feedlike.BroadCastId = feed.BroadcastId;
-        feedlike.Feed = new Object as Models.IShortFeed
-        feedlike.Feed.PersonId = feed.PersonId;
-        feedlike.Feed.PostBy = feed.PostBy;
-        feedlike.Feed.PostingAs = feed.PostingAs;
+    private onLikeFeed(feed: IFeed) {
+        let feedlike = {
+            Liked: !feed.Liked,
+            FeedId: feed.Id,
+            FeedType: feed.PostType,
+            BroadCastId: feed.BroadcastId,
+            Feed: {
+                PersonId: feed.PersonId,
+                PostBy: feed.PostBy,
+                PostingAs: feed.PostingAs
+            }
+        } as IFeedLike;
         FeedRepository.LikeFeed(feedlike).then(response => {
             if (response.error == null) {
                 feed.Liked = feedlike.Liked;
@@ -95,26 +114,26 @@ export class FeedBox extends React.Component<FeedBoxProps, {}>{
             }
         })
     }
-    private renderCommentBox(this, feed: Models.IFeed) {
+    private renderCommentBox(feed: IFeed) {
         let render = null;
-        render = <CommentBox onChange={this.onInputComment.bind(this)} OnPostComment={this.OnPostComment.bind(this)} feed={feed} />
+        render = <CommentBox onChange={(e)=>this.onInputComment(e)} OnPostComment={(e)=>this.OnPostComment(e)} feed={feed} />
         return render;
     }
-    private getPostComment(this, post: Models.IFeed) {
-        let comments = this.state.Comments as Models.IComment[];
+    private getPostComment(post: IFeed) {
+        let comments = this.state.Comments as IComment[];
         if (comments == null)
             comments = [];
         let currentSkip = this.state.commentSkip;
         CommentRepository.GetPostComment(post.Id, post.PostType, currentSkip).then(response => {
             if (response.error == null) {
-                let data = response.data as Models.IComment[];
+                let data = response.data as IComment[];
                 comments = comments.concat(data);
                 currentSkip = currentSkip + Utils.rowSkip;
                 this.setState({ Comments: comments, renderComments: true, commentSkip: currentSkip });
             }
         })
     }
-    private renderTagFriend(this, tags: Models.IShortPerson[]) {
+    private renderTagFriend(tags: IShortPerson[]) {
         let render = null;
         if (tags != null && tags.length > 0) {
             if (tags.length < 3)
@@ -133,8 +152,8 @@ export class FeedBox extends React.Component<FeedBoxProps, {}>{
         }
         return render;
     }
-    private renderComment(this, feed: Models.IFeed) {
-        let comments = this.state.Comments as Models.IComment[]
+    private renderComment(feed: IFeed) {
+        let comments = this.state.Comments
         if (comments == null) comments = [];
         let render = null
         render = comments.map((comment, index) => {
@@ -259,9 +278,9 @@ export class FeedBox extends React.Component<FeedBoxProps, {}>{
         return render
     }
    
-    public render(this) {
+    public render() {
         let render = null
-        let feed = this.state.Feed as Models.IFeed
+        let feed = this.state.feed
         let classLiked = feed.Liked?' liked':''
         if (feed != null) {
             render = <div className="feedbox">

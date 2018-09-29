@@ -1,29 +1,32 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as Utils from '../../infrastructure/Utils';
-import * as Models from '../../Models'
+import { IPage } from '../../Models/IPage'
 import './index.css'
 
 
 interface RecommendPageProps {
-    Page: Models.IPage
+    Page: IPage
 }
-export class RecommendPage extends React.Component<RecommendPageProps, {}>{
+interface RecommendPageStates {
+    page: IPage
+}
+export class RecommendPage extends React.Component<RecommendPageProps, RecommendPageStates>{
     constructor(props) {
         super(props);
         this.state = {
-            Page: this.props.Page
+            page: this.props.Page
         }
     }
-    public componentWillReceiveProps(this, nextProps: RecommendPageProps) {
-        if (nextProps != null) {
-            this.setState({ Page: nextProps.Page });
+    public componentWillReceiveProps(nextProps: RecommendPageProps) {
+        if (nextProps.Page != this.props.Page) {
+            this.setState({ page: nextProps.Page });
         }
     }
 
-    public render(this) {
+    public render() {
         let render = null;
-        let Page = this.state.Page as Models.IPage;
+        let Page = this.state.page
         if (Page == null) render = null
         else {
             render = <li>

@@ -2,9 +2,9 @@
     AuthorId: string,
     DisplayName: string,
     Avatar: string,
-    Url: string,
+    Url?: string,
     AuthorTypeId: number,
-    Rate: number,
-    WorkAs: string,
-    Title: string,
+    Rate?: number,
+    WorkAs?: string,
+    Title?: string,
 }

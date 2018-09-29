@@ -16,26 +16,26 @@ interface InputFileProps {
     isReadonly?: boolean,
     isTemporary?: boolean
 }
-export class InputFile extends React.Component<InputFileProps, {}>{
+interface InputFileStates {
+    dropzoneActive: boolean
+}
+export class InputFile extends React.Component<InputFileProps, InputFileStates>{
     constructor(props) {
         super(props);
         this.state = {
             dropzoneActive: false
         }
-        this.handleOnDragEnter = this.handleOnDragEnter.bind(this)
-        this.handleOnDragLeave = this.handleOnDragLeave.bind(this)
-        this.handleOnDrop = this.handleOnDrop.bind(this)
     }
     static contextTypes = {
         ShowMessage: PropTypes.func
     }
-    private handleOnDragEnter(this) {
+    private handleOnDragEnter() {
         this.setState({ dropzoneActive: true })
     }
-    private handleOnDragLeave(this) {
+    private handleOnDragLeave() {
         this.setState({ dropzoneActive: false })
     }
-    private handleOnDrop(this, acceptedFiles, rejectedFiles) {
+    private handleOnDrop( acceptedFiles, rejectedFiles) {
 
         //if (acceptedFiles.length > 0) {
         //    if (this.props.multiple) {
@@ -84,7 +84,7 @@ export class InputFile extends React.Component<InputFileProps, {}>{
 
         i.src = file.preview
     }
-    public render(this) {
+    public render() {
         let render = null;
         let className = 'input-file'
 

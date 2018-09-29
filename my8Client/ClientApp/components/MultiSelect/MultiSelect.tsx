@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import * as AppIcons from '../../AppIcon'
 import * as Utils from '../../infrastructure/Utils';
-import * as Models from '../../Models'
+import { IShortPerson } from '../../Models/IShortPerson'
 import './index.css'
 
 
@@ -9,7 +9,11 @@ interface MultiSelectProps {
     datas: Array<any>,
     title: string
 }
-export class MultiSelect extends React.Component<MultiSelectProps, {}>{
+interface MultiSelectStates {
+    selectedDatas: Array<any>,
+    allowInput: boolean
+}
+export class MultiSelect extends React.Component<MultiSelectProps, MultiSelectStates>{
     constructor(props) {
         super(props);
         this.state = {
@@ -17,14 +21,14 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}>{
             allowInput: false
         }
     }
-    public componentWillReceiveProps(this, nextProps: MultiSelectProps) {
+    public componentWillReceiveProps(nextProps: MultiSelectProps) {
     }
-    private onSwitch(this) {
+    private onSwitch() {
         let status = this.state.allowInput
         this.setState({ allowInput: !status });
     }
-    private renderInputSelect(this, status) {
-        return status == false ? <div className="multiple-select mb10" onClick={this.onSwitch.bind(this)} >
+    private renderInputSelect(status) {
+        return status == false ? <div className="multiple-select mb10" onClick={()=>this.onSwitch()} >
             <div className="">
                 <span className="pointer">{AppIcons.svgPlus("16px", "16px")}</span>
                 <span className="ad-new-selection-label-text">{this.props.title}</span>
@@ -34,7 +38,7 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}>{
                 <input type="text" placeholder={this.props.title} autoFocus={true} onChange={null} />
             </div>
     }
-    private renderSelectedDatas(this, datas: Models.IShortPerson[]) {
+    private renderSelectedDatas(datas: IShortPerson[]) {
         let render = null;
         if (datas.length) {
             render = <div className="tag-typer">
@@ -47,10 +51,10 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}>{
         }
         return render;
     }
-    public render(this) {
+    public render() {
         let render = null;
-        let allowInput = this.state.allowInput as boolean;
-        let datas = this.props.datas as Models.IShortPerson[]
+        let allowInput = this.state.allowInput;
+        let datas = this.props.datas
         render = <div>
             {this.renderInputSelect(allowInput)}
             {this.renderSelectedDatas(datas)}
