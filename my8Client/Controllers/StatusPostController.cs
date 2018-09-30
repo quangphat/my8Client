@@ -37,7 +37,7 @@ namespace my8Client.Controllers
             {
                 return ToResponse(false);
             }
-            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "StatusPosts/create", HttpMethod.Post,model);
+            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "/StatusPosts/create", HttpMethod.Post,model);
             return ToResponse(result);
         }
 

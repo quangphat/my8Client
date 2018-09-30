@@ -103,7 +103,8 @@ export class Input extends React.Component<IInputProps, IInputStates> {
         let { value } = this.state
 
         return <div>
-            <input type={type} id={id} autoFocus={this.props.autoFocus == true ? true : false} className={this.props.className} placeholder={placeholder} value={this.state.value}
+            <input type={type} id={id} autoFocus={this.props.autoFocus == true ? true : false}
+                className={this.props.className} placeholder={placeholder} value={this.state.value}
                 disabled={isDisabled}
                 readOnly={isReadOnly} name={name}
                 onChange={(e) => this.handleOnChange(e)}

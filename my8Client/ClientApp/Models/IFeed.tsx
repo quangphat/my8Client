@@ -8,7 +8,7 @@ import { IEmploymentType } from '../Models/IEmploymentType';
 import { IShortPerson } from '../Models/IShortPerson';
 export interface IFeed {
     Id: string,
-    PostTime: string,
+    PostTime: Date,
     PostTimeUnix: number,
     Content: string,
     PostBy: IAuthor,

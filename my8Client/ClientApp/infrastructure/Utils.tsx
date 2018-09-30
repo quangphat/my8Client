@@ -1,8 +1,8 @@
 ﻿import * as Router from 'react-router';
-import { createBrowserHistory } from 'history';
+import * as H from 'history';
 import {  HubConnectionBuilder } from '@aspnet/signalr';
 import * as Models from '../Models';
-export const History = createBrowserHistory({});
+export const History = H.createBrowserHistory({});
 export const rowSkip = 10;
 
 export const getLastInitBroadCastTime = (): number => {
@@ -125,6 +125,12 @@ export const getNewGuid = (): string => {
 }
 export const deepClone = (source: any) => {
     return JSON.parse(JSON.stringify(source))
+}
+export const transitionTo = (path: string, reload?: boolean, routeHistory?: H.History) => {
+    if (reload)
+        window.location.assign(path)
+    else
+        (routeHistory || History).push(path)
 }
 //export const hubConnection = new HubConnectionBuilder().withUrl('/chat').build();
 //export const createHubConnection = () => {

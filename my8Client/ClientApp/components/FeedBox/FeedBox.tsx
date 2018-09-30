@@ -14,6 +14,7 @@ import * as Enums from '../../Enum/Enum';
 import { CommentRepository } from '../../repositories/CommentRepository'
 import { FeedRepository } from '../../repositories/FeedRepository'
 import { PropTypes } from 'prop-types';
+import * as FormatHelper from '../../infrastructure/FormatHelper'
 interface FeedBoxProps {
     Feed: IFeed,
     onPersonComment: Function
@@ -166,7 +167,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
                     </div>
                     <div className="feed-body">
                         <div className="feed-comment-options">
-                            <div className="feed-comment-time cool">{comment.CommentTimeUnix}</div>
+                            <div className="feed-comment-time cool">{FormatHelper.FormatDateTimeFromDate(comment.CommentTime, '', '')}</div>
                             {<a className="comment-options-trigger">
                                 <span className="svg-icon-wrap">
                                     {AppIcons.svgEllipsisHorizontal()}
@@ -340,7 +341,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
                             </a>
                         </div>
                         <div className="feedbox-feed-time cool pull-right mt5">
-                            {feed.PostTimeUnix} <i className="fa fa-globe fa-1x"></i>
+                            {FormatHelper.FormatDateTimeFromTimespan(feed.PostTimeUnix, "", " ")} <i className="fa fa-globe fa-1x"></i>
                         </div>
                         <div className="clearfix"></div>
                     </div>

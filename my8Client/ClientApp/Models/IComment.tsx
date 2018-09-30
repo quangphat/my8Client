@@ -3,7 +3,7 @@ import { IShortFeed } from '../Models/IShortFeed';
 export interface IComment {
     Id: string,
     Commentator: IAuthor,
-    CommentTime: string,
+    CommentTime: Date,
     CommentTimeUnix: number,
     EditedTime: string,
     EditedTimeUnix: number,

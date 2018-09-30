@@ -64,7 +64,7 @@ namespace my8Client.Controllers
                 return null;
             }
             model.Password = Utils.GetSHA256Hash(model.Password);
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Person>>(Request, _clientConfig, "/api/account/login", HttpMethod.Post, model);
+            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Person>>(Request, _clientConfig, "/persons/login", HttpMethod.Post, model);
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 if (result.Data != null)
