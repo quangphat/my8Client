@@ -158,7 +158,7 @@ export class Home extends React.Component<{}, HomeStates> {
                     </a>
                 </span>
                 <span className="post-control">
-                    <a href="#" onClick={()=>this.handelOnShowPostJobPopup()}>
+                    <a href="#" onClick={() => window.open("/jobposting", "_blank")}>
                         {AppIcon.svgBriefcase('status-post-icon')}
                         <span className="mg-l15">Tuyển dụng</span>
                     </a>

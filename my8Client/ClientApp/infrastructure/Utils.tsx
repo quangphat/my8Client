@@ -65,7 +65,7 @@ export const isNullOrEmpty = (str: string): boolean => {
     return false;
 }
 export const isNullOrUndefined = (obj: any): boolean => {
-    if (obj == null || obj === '' || obj == undefined)
+    if (obj == null || obj == undefined)
         return true
     return false;
 }
@@ -78,23 +78,6 @@ export const Path = {
     index: '/',
     login: '/Account/Login',
     jobPosting: '/jobPosting'
-}
-export const Api = {
-    //feed
-    Feed_feeds: (skip: number): string => `/feeds/gets/${skip}`,
-    LikeFeed: (): string => '/feed/like',
-    InitFeedBroadCast: "/feed/init",
-    //comment
-    getPostComments: (postId: string, postType: number, skip: number) => `/comment/getbyPost/${postId}/${postType}/${skip}`,
-    createStatusPost: '/StatusPost/Create',
-    createComment: (): string => '/Comment/Create',
-    getFollowingPages: (): string => '/Person/GetFollowingPages',
-    createJobPost: '/JobPost/Create',
-    getTopInteractiveFriends: (): string => '/person/GetTopFriend',
-    //profile
-    getPersonProfile: (url:string): string => `/person/GetByUrl/${url}`,
-    //job function
-    getJobFunctions: (searchStr: string): string => `/jobfunction/search/${searchStr}`
 }
 
 export const GetCurrentUserAvatar = (): string => {
@@ -132,7 +115,7 @@ export const transitionTo = (path: string, reload?: boolean, routeHistory?: H.Hi
     else
         (routeHistory || History).push(path)
 }
-//export const hubConnection = new HubConnectionBuilder().withUrl('/chat').build();
-//export const createHubConnection = () => {
-//    hubConnection.start();
-//}
+export const hubConnection = new HubConnectionBuilder().withUrl('/chat').build();
+export const createHubConnection = () => {
+    hubConnection.start();
+}

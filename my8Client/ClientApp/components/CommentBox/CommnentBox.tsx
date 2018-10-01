@@ -47,8 +47,7 @@ export class CommentBox extends React.Component<CommentBoxProps, CommentBoxState
             this.props.OnPostComment(this.props.feed);
             this.setState({ value: '' });
         }
-        else
-        if (e.key === "Enter") {
+        else if (e.key === "Enter") {
             //e.target.textContent = ''
             ////e.preventDefault();
             ////this.props.onChange(e.target.textContent)

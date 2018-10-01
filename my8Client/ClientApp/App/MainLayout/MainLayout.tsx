@@ -31,39 +31,22 @@ export class MainLayout extends React.Component<MainLayoutProps, MainLayoutState
     componentDidMount() {
         this.getFollowingPages();
         this.getTopInteractiveFriends();
-        //Utils.createHubConnection();
-        //let Notify = this.state.Notify
-        //Utils.hubConnection.on('NotifyComment', (Notify) => {
-        //    this.ShowMessage('success', Notify.Content);
-        //    //this.setState({ Notify: Notify })
-        //});
-        //Utils.hubConnection
-        //    .invoke('NotifyComment', this.state.Notify).then((response) => {
-        //        this.ShowMessage('success', this.state.Notify.Content);
-        //    })
-        //    .catch(err => console.error(err));
-
-        //Utils.hubConnection.on('NotifyComment', this.state.Notify => {
-        //    const text = `${nick}: ${receivedMessage}`;
-        //    const messages = receivedMessage;
-        //    this.setState({ testSignalR: messages });
-        //});
+        Utils.createHubConnection();
+        Utils.hubConnection.on('NotifyComment', (Notify) => {
+            this.ShowMessage('success', Notify.Content);
+            //this.setState({ Notify: Notify })
+        });
     }
     static childContextTypes = {
         ShowMessage: PropTypes.func,
         _sendCommentNotify: PropTypes.func
     }
-    private _sendCommentNotify( Notify: Models.INotification) {
-        //Utils.hubConnection
-        //    .invoke('NotifyComment', Notify).then((response) => {
-        //        this.context.ShowMessage('success', Notify.Content);
-        //    })
-        //    .catch(err => console.error(err));
+    private _sendCommentNotify(Notify: Models.INotification) {
+        Utils.hubConnection
+            .invoke('NotifyComment', Notify).then((response) => {
+            })
+            .catch(err => console.error(err));
 
-        //Utils.hubConnection
-        //    .invoke('NotifyComment', Notify)
-        //    .catch(err => console.error(err));
-        //this.setState({ Notify: Notify })
     }
     private ShowMessage(type: string, message?: string, error_code?: string) {
         let notifies = this.state.notifies;

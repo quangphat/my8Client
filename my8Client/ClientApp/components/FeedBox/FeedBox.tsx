@@ -63,7 +63,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
             FeedType: feed.PostType,
             Content: currentUserComment,
             Feed: {
-                PersonId: feed.PersonId,
+                PersonId: feed.PostBy.AuthorId,
                 PostBy: feed.PostBy,
                 PostingAs: feed.PostingAs
             }
