@@ -31,5 +31,5 @@ export const routes = <Switch>
     <AppRoute exact path={Utils.Path.jobPosting} layout={App.LayoutNoFollowingPage} component={App.JobPosting} />
     <AppRoute exact path={Utils.Path.login} layout={App.MainLayout} component={App.Login} />
     <AppRoute exact path="/" layout={App.MainLayout} component={App.Home} />
-    <AppRoute path="/profile" layout={App.LayoutNoFollowingPage} component={App.Profile} />
+    <AppRoute path={Utils.Path.profile()} layout={App.LayoutNoFollowingPage} component={App.Profile} />
 </Switch>

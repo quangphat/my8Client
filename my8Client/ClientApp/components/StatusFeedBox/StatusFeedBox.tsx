@@ -2,8 +2,7 @@
 import { RouteComponentProps } from 'react-router';
 import * as Utils from '../../infrastructure/Utils';
 import * as AppIcons from '../../AppIcon'
-import { IFeed } from '../../Models/IFeed'
-import { IShortFeed } from '../../Models/IShortFeed'
+import { IStatusPost } from '../../Models/IStatusPost'
 import { IComment } from '../../Models/IComment'
 import { IFeedLike } from '../../Models/IFeedLike'
 import { IAuthor } from '../../Models/IAuthor'
@@ -15,22 +14,22 @@ import { CommentRepository } from '../../repositories/CommentRepository'
 import { FeedRepository } from '../../repositories/FeedRepository'
 import { PropTypes } from 'prop-types';
 import * as FormatHelper from '../../infrastructure/FormatHelper'
-interface FeedBoxProps {
-    Feed: IFeed,
+interface StatusFeedBoxProps {
+    feed: IStatusPost,
     onPersonComment: Function
 }
-interface FeedBoxStates {
-    feed: IFeed,
+interface StatusFeedBoxStates {
+    feed: IStatusPost,
     renderComments: boolean,
     Comments: IComment[],
     commentSkip: number,
     currentUserComment: string
 }
-export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
+export class StatusFeedBox extends React.Component<StatusFeedBoxProps, StatusFeedBoxStates>{
     constructor(props) {
         super(props);
         this.state = {
-            feed: this.props.Feed,
+            feed: this.props.feed,
             renderComments: false,
             Comments: [],
             commentSkip: 0,
@@ -54,7 +53,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
     private onInputComment(value) {
         this.setState({ currentUserComment: value })
     }
-    private OnPostComment(feed: IFeed) {
+    private OnPostComment(feed: IStatusPost) {
         let currentUserComment = this.state.currentUserComment;
         if (currentUserComment == null || feed == null)
             return;
@@ -65,7 +64,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
             Feed: {
                 PersonId: feed.PostBy.AuthorId,
                 PostBy: feed.PostBy,
-                PostingAs: feed.PostingAs
+                PostingAs: Enums.PostType.Status
             }
         } as IComment;
         CommentRepository.CreateComment(comment).then(response => {
@@ -88,16 +87,16 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
             }
         })
     }
-    private onLikeFeed(feed: IFeed) {
+    private onLikeFeed(feed: IStatusPost) {
         let feedlike = {
             Liked: !feed.Liked,
             FeedId: feed.Id,
             FeedType: feed.PostType,
-            BroadCastId: feed.BroadcastId,
+            BroadCastId: null,
             Feed: {
                 PersonId: feed.PersonId,
                 PostBy: feed.PostBy,
-                PostingAs: feed.PostingAs
+                PostingAs: Enums.PostType.Status
             }
         } as IFeedLike;
         FeedRepository.LikeFeed(feedlike).then(response => {
@@ -115,12 +114,12 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
             }
         })
     }
-    private renderCommentBox(feed: IFeed) {
+    private renderCommentBox(feed: IStatusPost) {
         let render = null;
-        render = <CommentBox onChange={(e)=>this.onInputComment(e)} OnPostComment={(e)=>this.OnPostComment(e)} feed={feed} />
+        render = <CommentBox onChange={(e) => this.onInputComment(e)} OnPostComment={(e) => this.OnPostComment(e)} feed={feed} />
         return render;
     }
-    private getPostComment(post: IFeed) {
+    private getPostComment(post: IStatusPost) {
         let comments = this.state.Comments as IComment[];
         if (comments == null)
             comments = [];
@@ -153,7 +152,7 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
         }
         return render;
     }
-    private renderComment(feed: IFeed) {
+    private renderComment(feed: IStatusPost) {
         let comments = this.state.Comments
         if (comments == null) comments = [];
         let render = null
@@ -278,11 +277,11 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
 
         return render
     }
-   
+
     public render() {
         let render = null
         let feed = this.state.feed
-        let classLiked = feed.Liked?' liked':''
+        let classLiked = feed.Liked ? ' liked' : ''
         if (feed != null) {
             render = <div className="feedbox">
                 <div className="feedbox-control">
@@ -310,15 +309,12 @@ export class FeedBox extends React.Component<FeedBoxProps, FeedBoxStates>{
                         <a href="#" className="fw600">
                             {feed.PostBy.DisplayName}
                         </a>
-                        
+
                     </span>
                     <span> {this.renderTagFriend(feed.PersonTags)} </span>
                     <div className="author-headline cool">
                         {feed.PostBy.WorkAs}
                     </div>
-                    {
-                        feed.PostType == Enums.PostType.Job ? <div className="btn-apply">Apply</div> : ''
-                    }
                 </div>
 
                 <div className="clearfix"></div>

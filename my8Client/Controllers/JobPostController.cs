@@ -29,6 +29,13 @@ namespace my8Client.Controllers
             var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, $"/JobPosts/create", HttpMethod.Post, model);
             return ToResponse(result);
         }
-
+        [HttpGet]
+        [Route("{authorId}/{authorType}/{page}/{limit}")]
+        public async Task<IActionResult> GetByAuthor(string authorId, int authorType, int page, int limit)
+        {
+            var results = await _httpClient.SendRequestAsync<ResponseJsonModel<List<JobPost>>>(Request, _clientConfig,
+                $"/JobPosts/{authorId}/{authorType}/{page}/{limit}", HttpMethod.Get);
+            return ToResponse(results);
+        }
     }
 }

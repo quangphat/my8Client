@@ -2,7 +2,7 @@ import * as Models from '../Models'
 import { Fetch } from './Fetch'
 export const JobRepository = {
     PostJob: async (job) => {
-        return Fetch.Post('/JobPost/Create', job).then(response => {
+        return Fetch.Post('/JobPosts/Create', job).then(response => {
             return response;
         })
     },
@@ -11,4 +11,9 @@ export const JobRepository = {
             return response;
         })
     },
+    GetJobPostByAuthor: async (authorId: string, authorType: number, page: number, limit: number) => {
+        return Fetch.Get(`/JobPosts/${authorId}/${authorType}/${page}/${limit}`).then(response => {
+            return response;
+        })
+    }
 }

@@ -16,6 +16,7 @@ export interface IJobPost {
     EditedTime: string,
     EditedTimeUnix: number,
     Likes: number,
+    Liked: boolean,
     Comments: number,
     Shares: number,
     Views: number,

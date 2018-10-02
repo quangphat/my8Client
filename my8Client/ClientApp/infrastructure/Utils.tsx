@@ -3,7 +3,7 @@ import * as H from 'history';
 import {  HubConnectionBuilder } from '@aspnet/signalr';
 import * as Models from '../Models';
 export const History = H.createBrowserHistory({});
-export const rowSkip = 10;
+export const limit = 10;
 
 export const getLastInitBroadCastTime = (): number => {
     let raw = localStorage.getItem('initBroadcastTime');
@@ -77,6 +77,10 @@ export const isArrNullOrHaveNoItem = (arr: any[]): boolean => {
 export const Path = {
     index: '/',
     login: '/Account/Login',
+    profile: (profilename?: string): string => {
+        if (isNullOrEmpty(profilename)) return '/profile/:profilename'
+        return `/profile/${profilename}`
+    },
     jobPosting: '/jobPosting'
 }
 

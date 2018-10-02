@@ -19,6 +19,7 @@ export interface IStatusPost {
     Privacy: number,
     PostType: number,
     PersonId: string,
-    PostingAsType: string
+    PostingAsType: string,
+    Liked: boolean
 }
 //<AppendNewHere>

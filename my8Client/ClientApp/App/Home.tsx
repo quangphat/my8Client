@@ -9,6 +9,7 @@ import * as Enums from '../Enum/Enum'
 import { Popup } from '../components/Popup/Popup';
 import { ContentEditable } from '../components/ContentEditable/ContentEditable';
 import { PostStatusPopup } from '../components/PostStatusPopup/PostStatusPopup';
+import { Button } from '../components/Button';
 import { CommentBox } from '../components/CommentBox/CommnentBox';
 import { FeedBox } from '../components/FeedBox/FeedBox';
 import * as AppIcon from '../AppIcon';
@@ -158,10 +159,10 @@ export class Home extends React.Component<{}, HomeStates> {
                     </a>
                 </span>
                 <span className="post-control">
-                    <a href="#" onClick={() => window.open("/jobposting", "_blank")}>
+                    <Button type="link" handleOnClick={() => window.open("/jobposting", "_blank")}>
                         {AppIcon.svgBriefcase('status-post-icon')}
                         <span className="mg-l15">Tuyển dụng</span>
-                    </a>
+                    </Button>
                 </span>
                 <span className="post-control">
                     <a href="#">

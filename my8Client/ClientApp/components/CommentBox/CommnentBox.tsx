@@ -1,14 +1,17 @@
 ﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as Utils from '../../infrastructure/Utils';
-import * as Models from '../../Models'
+import { IFeed } from '../../Models/IFeed'
+import { IStatusPost } from '../../Models/IStatusPost'
+import { IJobPost } from '../../Models/IJobPost'
+
 import './index.css'
 
 
 interface CommentBoxProps {
     onChange: Function,
     OnPostComment: Function,
-    feed: Models.IFeed,
+    feed: IFeed | IStatusPost | IJobPost,
     defaultValue?: string
 }
 interface CommentBoxStates {

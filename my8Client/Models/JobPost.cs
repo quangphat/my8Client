@@ -21,6 +21,7 @@ namespace my8Client.Models
         public long EditedTimeUnix { get; set; }
         public string CompanyName { get; set; }
         public int Likes { get; set; }
+        public bool Liked { get; set; }
         public int Comments { get; set; } //Số comment
         public int Shares { get; set; }
         public int Views { get; set; }

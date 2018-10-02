@@ -15,8 +15,18 @@ namespace my8Client.Controllers
     [Route("StatusPosts")]
     public class StatusPostController  : BaseController
     {
-        public StatusPostController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public StatusPostController(HttpClient httpClient, 
+            IOptions<ClientConfig> clientConfig,
+            CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
         {
+        }
+        [HttpGet]
+        [Route("{authorId}/{authorType}/{page}/{limit}")]
+        public async Task<IActionResult> GetByAuthor(string authorId, int authorType, int page, int limit)
+        {
+            var results = await _httpClient.SendRequestAsync<ResponseJsonModel<List<StatusPost>>>(Request, _clientConfig,
+                $"/StatusPosts/{authorId}/{authorType}/{page}/{limit}", HttpMethod.Get);
+            return ToResponse(results);
         }
         [HttpPost]
         [Route("Create")]

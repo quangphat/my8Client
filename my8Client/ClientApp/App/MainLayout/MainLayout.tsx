@@ -5,6 +5,7 @@ import * as Models from '../../Models';
 import { PersonRepository } from '../../repositories/PersonRepository';
 import { FollowingPageItem } from '../../components/FollowingPageItem/FollowingPageItem';
 import { Notification } from '../../components/Notification/Notification'
+import { Button } from '../../components/Button'
 import * as AppIcon from '../../AppIcon';
 import { PropTypes } from 'prop-types';
 import './index.css';
@@ -136,8 +137,7 @@ export class MainLayout extends React.Component<MainLayoutProps, MainLayoutState
                     </div>
                 </div>
                 <div className="info_user_header">
-
-                    <a href={'/profile/' + Account.Url} className="avartar_and_name">
+                    <a href={Utils.Path.profile(Account.Url)} className="avartar_and_name">
                         <div className="avartar_and_name_avartar">
                             <img src="../../../../assets/images/avatar/avatar_main.png" />
                         </div>

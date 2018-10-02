@@ -6,4 +6,9 @@ export const StatusRepository = {
             return response;
         })
     },
+    GetStatusPostByAuthor: async (authorId: string, authorType: number, page: number, limit: number) => {
+        return Fetch.Get(`/StatusPosts/${authorId}/${authorType}/${page}/${limit}`).then(response => {
+            return response;
+        })
+    },
 }
