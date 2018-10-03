@@ -1,34 +1,51 @@
 ﻿import * as React from 'react';
 import * as Utils from '../../infrastructure/Utils';
-import * as Models from '../../Models'
+import * as FormatHelper from '../../infrastructure/FormatHelper';
+import { IExperience } from '../../Models/IExperience'
 import './index.css'
 
 
 interface ExperienceItemProps {
-    
+    experience: IExperience
 }
 interface ExperienceItemStates {
-    
+    experience: IExperience
 }
 export class ExperienceItem extends React.Component<ExperienceItemProps, ExperienceItemStates>{
     constructor(props) {
         super(props);
 
         this.state = {
-            
+            experience : this.props.experience
         }
     }
     public componentDidMount() {
 
     }
     public componentWillReceiveProps(nextProps: ExperienceItemProps) {
+        if (this.props.experience != nextProps.experience) {
+            this.setState({ experience: nextProps.experience })
+        }
     }
 
     public render() {
+        let experience = this.state.experience
+        let fromDate = new Date(experience.FromDate)
+        let todate = new Date(experience.ToDate)
+        let display = ''
+        let elapsed = 0
+        if (experience.isCurrentlyWorkHere) {
+            display = 'Hiện tại'
+            todate = new Date()
+        }
+        else {
+            display = `${todate.getMonth()}/${todate.getFullYear()}`
+        }
+        elapsed = FormatHelper.getDuration(experience.FromDate, todate)
         return <div className="timeline-date-event">
             <div className="timeline-date-time">
-                11/2017 - Hiện tại . 6 tháng
-                            </div>
+                {fromDate.getMonth()}/{fromDate.getFullYear()} - {display}. {elapsed} tháng
+             </div>
             <div className="timeline-date-event-icon-lineleft"></div>
             <div className="timeline-date-event-line-vertical"></div>
             <div className="timeline-date-event-content">
@@ -38,8 +55,8 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
                         <img src={Utils.GetCurrentUserAvatar100()} alt="Superman" />
                     </div>
                     <span className="company_item_name">
-                        Superman
-                                    </span>
+                        {experience.CompanyName}
+                    </span>
                     <span className="user-info-company">
                         Haravan - Công ty công nghệ cung cấp giải pháp kinh doanh thương mại điện tử
                                         </span>
@@ -51,7 +68,7 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
                 <div className="timeline-date-event-content-main">
                     <a href="#">Thêm mô tả</a>
                     <ul className="nav-list-description">
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum convallis tempor
+                        <li>{experience.Description}
                                         <a className="ml10"><i className="fa fa-pencil"></i></a>
                         </li>
                         <li>Vestibulum aliquam arcu in odio mattis, nec aliquet velit rutrum

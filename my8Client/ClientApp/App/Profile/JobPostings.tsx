@@ -56,7 +56,7 @@ export class JobPostings extends React.Component<JobPostingsProps, JobPostingsSt
         JobRepository.GetJobPostByAuthor(this.props.person.Id, 1, page, paging.limit).then(response => {
             if (response != null && response.error == null && response.data != null) {
                 paging.page = page
-                let datas = response.data as IJobPost[]
+                let datas = response.data
                 let posts = this.state.posts
                 datas.map(p => {
                     posts.push(p);

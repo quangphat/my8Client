@@ -72,8 +72,8 @@ export const svgPlus = (width = "20px", height = "20px"): JSX.Element => {
         <path fill="currentColor" d="M376 232H216V72c0-4.42-3.58-8-8-8h-32c-4.42 0-8 3.58-8 8v160H8c-4.42 0-8 3.58-8 8v32c0 4.42 3.58 8 8 8h160v160c0 4.42 3.58 8 8 8h32c4.42 0 8-3.58 8-8V280h160c4.42 0 8-3.58 8-8v-32c0-4.42-3.58-8-8-8z"></path>
     </svg>
 }
-export const svgCheck = (): JSX.Element => {
-    return <svg viewBox="0 0 24 24" width="16px" height="16px" x="0" y="0" preserveAspectRatio="xMinYMin meet" style={{ fill: "currentcolor", position: "relative", top:"6px" }}><g>
+export const svgCheck = (width = "16px", height = "16px"): JSX.Element => {
+    return <svg viewBox="0 0 24 24" x="0" y="0" preserveAspectRatio="xMinYMin meet" style={{ fill: "currentcolor", position: "relative", top: "6px", width: width, height: height }}><g>
         <path d="M15,3L6.57,13.72A0.7,0.7,0,0,1,6,14a0.72,0.72,0,0,1-.56-0.27L1,8.07,2.36,7,6,11.72,13.68,2Z"></path>
     </g></svg>     
 }

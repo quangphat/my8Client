@@ -14,3 +14,4 @@ export { ICommentNotify } from './ICommentNotify';
 export { INotification } from './INotification';
 export { IShortFeed } from './IShortFeed';
 export { IJobFunction } from './IJobFunction';
+export { IExperience } from './IExperience';

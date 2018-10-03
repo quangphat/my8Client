@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as ReactDOM from 'react-dom';
 import * as Utils from '../../infrastructure/Utils';

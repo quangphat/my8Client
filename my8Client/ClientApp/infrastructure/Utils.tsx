@@ -119,6 +119,18 @@ export const transitionTo = (path: string, reload?: boolean, routeHistory?: H.Hi
     else
         (routeHistory || History).push(path)
 }
+export const getListYear = (min: number = 1959) => {
+    let thisYear = new Date().getFullYear()
+    
+    let years = []
+    //for (let y = min; y < thisYear+1; y++) {
+    //    years.push({ value: y.toString(), display: y.toString() })
+    //}
+    for (let y = thisYear; y > min; y--) {
+        years.push({ value: y.toString(), display: y.toString() })
+    }
+    return years;
+}
 export const hubConnection = new HubConnectionBuilder().withUrl('/chat').build();
 export const createHubConnection = () => {
     hubConnection.start();

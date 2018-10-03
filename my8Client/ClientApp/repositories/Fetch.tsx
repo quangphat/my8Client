@@ -41,7 +41,7 @@ export class Fetch {
                 this.showWait(false)
             }
             if (response.status == 200) {
-                let result = response.json() as Promise<IResponse<T>>
+                let result = response.json() as Promise<IResponse<any>>
                 if (callback_success || callback_fail) {
                     result.then((data) => {
                         if (!data.error) {
@@ -88,7 +88,7 @@ export class Fetch {
             }
 
             if (response.status == 200) {
-                let result = response.json() as Promise<IResponse<T>>
+                let result = response.json() as Promise<IResponse<any>>
                 if (callback_success || callback_fail) {
                     result.then((data) => {
                         if (!data.error) {

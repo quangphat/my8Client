@@ -112,6 +112,11 @@ export const FormatDateTimeFromTimespan = (inputDate: number, format: string = "
     let d = getDate(inputDate)
     return MomentLocaleCalendar(d, format, calendarFormatChange);
 }
+export const getDuration = (fromDate: Date, toDate: Date, type: string = 'months'): number => {
+    let start = moment(toDate)
+    let end = moment(fromDate)
+    return start.diff(end, 'months')
+}
 export const FormatMoney = (value: any, format: string = '0,0 $'): string => {
     return numeral(value).format(format)
 }
