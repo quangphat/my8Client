@@ -40,7 +40,8 @@ namespace my8Client.Controllers
         public async Task<IActionResult> GetExperiencesByPerson(int page, int limit)
         {
             string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Pagination<Experience>>>(Request, _clientConfig, $"/Experiences/{page}/{limit}/person/{personId}", HttpMethod.Get);
+            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Pagination<Experience>>>(Request, _clientConfig, 
+                $"/Experiences/{page}/{limit}/person/{personId}", HttpMethod.Get,null);
             return ToResponse(result);
         }
     }

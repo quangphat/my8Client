@@ -52,7 +52,7 @@ export class ActivityPost extends React.Component<ActivityPostProps, ActivityPos
         if (page == 0 && this.state.posts.length > 0) return
         this.setState({ isLoading: true })
         let paging = this.state.paging
-        
+        debugger
         StatusRepository.GetStatusPostByAuthor(this.props.person.Id, 1, page, paging.limit).then(response => {
             if (response != null && response.error == null && response.data != null) {
                 paging.page = page

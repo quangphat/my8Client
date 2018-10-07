@@ -16,9 +16,9 @@ namespace my8Client.Infrastructures
         public static async Task<HttpClientResult<string>> SendRequestAsync(
             this HttpClient httpClient, HttpRequest request,
             ClientConfig clientConfig, string path, HttpMethod method,
-            object data = null)
+            object data = null, CurrentProcess process = null)
         {
-            var result = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data).ConfigureAwait(false);
+            var result = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data,process).ConfigureAwait(false);
 
             return result != null
                 ? HttpClientResult<string>.Create(result.Item1, result.Item2, result.Item3, result.Item4)
@@ -27,9 +27,9 @@ namespace my8Client.Infrastructures
         public static async Task<HttpClientResult<T>> SendRequestAsync<T>(
             this HttpClient httpClient, HttpRequest request,
             ClientConfig clientConfig, string path, HttpMethod method,
-            object data = null)
+            object data = null, CurrentProcess process = null)
         {
-            var response = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data).ConfigureAwait(false);
+            var response = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data,process).ConfigureAwait(false);
 
             if (response != null)
             {
@@ -40,7 +40,7 @@ namespace my8Client.Infrastructures
                     var obj = result as ResponseJsonModel;
 
                     if (obj?.error?.code != null)
-                        obj.error.message = "Lỗi";
+                        obj.error.message = "error";
                 }
 
                 return HttpClientResult<T>.Create(response.Item1, result, response.Item3, response.Item4);
@@ -52,10 +52,9 @@ namespace my8Client.Infrastructures
         public static async Task<HttpClientResult<string>> SendHandShakeRequestAsync<T>(
             this HttpClient httpClient, HttpRequest request,
             ClientConfig clientConfig, string path, HttpMethod method,
-            object data = null)
+            object data = null, CurrentProcess process = null)
         {
-            var result = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data).ConfigureAwait(false);
-            string x = "";
+            var result = await _sendRequestAsync(httpClient, request, clientConfig, path, method, data,process).ConfigureAwait(false);
             if(result!=null)
             {
                 return HttpClientResult<string>.Create(result.Item1, result.Item2, result.Item3, result.Item4);
@@ -66,7 +65,7 @@ namespace my8Client.Infrastructures
         private static async Task<Tuple<HttpStatusCode, string, string, bool>> _sendRequestAsync(
             HttpClient httpClient, HttpRequest request,
             ClientConfig clientConfig, string path, HttpMethod method,
-            object data)
+            object data, CurrentProcess process = null)
         {
             var url = $"{clientConfig.ServiceUrl}{path}";
 
@@ -126,12 +125,12 @@ namespace my8Client.Infrastructures
 
             var signature = string.Empty;
             signature = Utils.HmacSha256(clientConfig.ApiKey + originalData, clientConfig.SecretKey);
-
+            string personId = process != null ? process.CurrentAccount.Account.PersonId : string.Empty;
 
             #endregion
             requestMessage.Headers.Add("X-my8-Key", clientConfig.ApiKey);
-            requestMessage.Headers.Add("X-my8-Signature", signature);
-            requestMessage.Headers.Add("X-my8-userId", "test");
+            requestMessage.Headers.Add("X-my8-Signature", signature);       
+            requestMessage.Headers.Add("X-my8-PersonId", personId);
             using (var response = await httpClient.SendAsync(requestMessage))
             {
                 if (response.Content != null)

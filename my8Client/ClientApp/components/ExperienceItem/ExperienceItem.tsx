@@ -33,7 +33,7 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
         let fromDate = new Date(experience.FromDate)
         let todate = new Date(experience.ToDate)
         let display = ''
-        let elapsed = 0
+        let elapsed = ''
         if (experience.isCurrentlyWorkHere) {
             display = 'Hiện tại'
             todate = new Date()
@@ -44,7 +44,7 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
         elapsed = FormatHelper.getDuration(experience.FromDate, todate)
         return <div className="timeline-date-event">
             <div className="timeline-date-time">
-                {fromDate.getMonth()}/{fromDate.getFullYear()} - {display}. {elapsed} tháng
+                {fromDate.getMonth()}/{fromDate.getFullYear()} - {display}. {elapsed}
              </div>
             <div className="timeline-date-event-icon-lineleft"></div>
             <div className="timeline-date-event-line-vertical"></div>
