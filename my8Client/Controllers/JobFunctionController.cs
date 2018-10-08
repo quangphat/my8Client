@@ -15,7 +15,8 @@ namespace my8Client.Controllers
     [Route("jobFunctions")]
     public class JobFunctionController  : BaseController
     {
-        public JobFunctionController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public JobFunctionController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpGet]

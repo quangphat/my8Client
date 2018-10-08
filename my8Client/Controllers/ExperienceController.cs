@@ -16,7 +16,8 @@ namespace my8Client.Controllers
     public class ExperienceController  : BaseController
     {
         public ExperienceController(HttpClient httpClient, 
-            IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+            IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpPost]
@@ -40,9 +41,11 @@ namespace my8Client.Controllers
         public async Task<IActionResult> GetExperiencesByPerson(int page, int limit)
         {
             string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Pagination<Experience>>>(Request, _clientConfig, 
-                $"/Experiences/{page}/{limit}/person/{personId}", HttpMethod.Get,null);
-            return ToResponse(result);
+            //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Pagination<Experience>>>(Request, _clientConfig, 
+            //    $"/Experiences/{page}/{limit}/person/{personId}", HttpMethod.Get,null);
+            var x = await GetAsync(Request ,$"/Experiences/{page}/{limit}/person/{personId}");
+            return x;
+            //return ToResponse(result);
         }
     }
 }

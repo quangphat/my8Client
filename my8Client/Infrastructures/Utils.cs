@@ -1,6 +1,8 @@
-﻿using MsgPack.Serialization;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using MsgPack.Serialization;
 using my8Client.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -22,6 +24,25 @@ namespace my8Client.Infrastructures
                 byte[] hash = sha.ComputeHash(textData);
                 return BitConverter.ToString(hash).Replace("-", String.Empty);
             }
+        }
+        public static IEnumerable<KeyValuePair<string, object>> ToKeyPairs(this object obj)
+        {
+            if (obj == null)
+                yield break;
+
+            foreach (var property in obj.GetType().GetProperties())
+            {
+                var value = property.GetValue(obj);
+                if (value != null)
+                    yield return new KeyValuePair<string, object>(property.Name, value);
+            }
+        }
+        public static string AddQuery(this string path, object obj)
+        {
+            if (path == null || obj == null)
+                return path;
+
+            return QueryHelpers.AddQueryString(path, obj.ToKeyPairs().ToDictionary(m => m.Key, m => m.Value.ToString()));
         }
         public static string HmacSha256(string originalData, string secretKey)
         {

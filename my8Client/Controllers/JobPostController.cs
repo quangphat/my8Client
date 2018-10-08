@@ -15,7 +15,8 @@ namespace my8Client.Controllers
     [Route("JobPosts")]
     public class JobPostController  : BaseController
     {
-        public JobPostController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public JobPostController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpPost]

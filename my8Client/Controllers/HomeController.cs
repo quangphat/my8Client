@@ -17,7 +17,8 @@ namespace my8Client.Controllers
     [Produces("application/json")]
     public class HomeController : BaseController
     {
-        public HomeController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public HomeController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
         }
         [Authorize]

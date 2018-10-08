@@ -15,7 +15,8 @@ namespace my8Client.Controllers
     [Route("Feeds")]
     public class FeedController  : BaseController
     {
-        public FeedController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public FeedController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
             //_lastSkip = 0;
         }
@@ -23,9 +24,10 @@ namespace my8Client.Controllers
         [Route("{skip}")]
         public async Task<IActionResult> GetFeeds(int skip)
         {
-            string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var feeds = await _httpClient.SendRequestAsync<ResponseJsonModel<List<Feed>>>(Request, _clientConfig, $"/feeds/{personId}/{skip}", HttpMethod.Get);
-            return ToResponse(feeds);
+            return await GetAsync(Request, $"/feeds/{skip}");
+            //string personId = _currentProcess.CurrentAccount.Account.PersonId;
+            //var feeds = await _httpClient.SendRequestAsync<ResponseJsonModel<List<Feed>>>(Request, _clientConfig, $"/feeds/{personId}/{skip}", HttpMethod.Get);
+            //return ToResponse(feeds);
         }
         [HttpPost]
         [Route("like")]
@@ -42,9 +44,7 @@ namespace my8Client.Controllers
         [Route("init")]
         public async Task<IActionResult> InitBroadcast()
         {
-            string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, $"/feeds/{personId}/Init", HttpMethod.Post);
-            return ToResponse(result);
+            return await PostAsync(Request,"/feeds/Init");
         }
         //[HttpGet]
         //[Route("/feed/startHubConnection")]

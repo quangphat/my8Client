@@ -17,7 +17,7 @@ namespace my8Client.Controllers
     {
         public PersonController(HttpClient httpClient, 
             IOptions<ClientConfig> clientConfig,
-            CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+            CurrentProcess currentProcess) :base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpGet]

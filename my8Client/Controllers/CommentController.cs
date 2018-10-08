@@ -16,7 +16,8 @@ namespace my8Client.Controllers
     [Route("comments")]
     public class CommentController : BaseController
     {
-        public CommentController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess):base(httpClient,clientConfig,currentProcess)
+        public CommentController(HttpClient httpClient, IOptions<ClientConfig> clientConfig,CurrentProcess currentProcess)
+            :base(httpClient,clientConfig,currentProcess)
         {
         }
         [HttpGet]
