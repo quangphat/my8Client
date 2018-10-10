@@ -26,8 +26,9 @@ namespace my8Client.Controllers
             if (string.IsNullOrWhiteSpace(searchStr))
                 return ToResponse(null);
             string formated = searchStr.NonUnicode();
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<JobFunction>>>(Request, _clientConfig, $"/JobFunctions/search/{formated}", HttpMethod.Get);
-            return ToResponse(result);
+            //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<JobFunction>>>(Request, _clientConfig, $"/JobFunctions/search/{formated}", HttpMethod.Get);
+            //return ToResponse(result);
+            return await GetAsync(Request, $"/JobFunctions/search/{formated}");
         }
 
     }

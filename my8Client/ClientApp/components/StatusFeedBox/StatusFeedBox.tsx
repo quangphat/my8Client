@@ -140,14 +140,14 @@ export class StatusFeedBox extends React.Component<StatusFeedBoxProps, StatusFee
                 render = <span >
                     <span> cùng với </span>
                     {tags.map((item, index) => {
-                        return index == 1 ? <span key={item.Id}> và <a href={item.Url}> {item.DisplayName}</a></span> : <a href={item.Url} > {item.DisplayName}</a>
+                        return index == 1 ? <span key={item.Id}> và <a href={item.ProfileName}> {item.DisplayName}</a></span> : <a href={item.ProfileName}> {item.DisplayName}</a>
                     })
                     }
                 </span>
             else
                 render = <span>
                     <span> cùng với </span>
-                    <a href={tags[0].Url}>{tags[0].DisplayName}</a> và <span>{tags.length - 1} người khác</span>
+                    <a href={tags[0].ProfileName}>{tags[0].DisplayName}</a> và <span>{tags.length - 1} người khác</span>
                 </span>
         }
         return render;

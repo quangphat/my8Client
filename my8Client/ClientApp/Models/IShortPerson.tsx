@@ -1,7 +1,7 @@
 export interface IShortPerson {
     Id: string,
     DisplayName: string,
-    Url: string,
+    ProfileName: string,
     Avatar: string,
     WorkAs: string,
     Company: string,

@@ -26,7 +26,7 @@ namespace my8Client.Infrastructures
                 .ForMember(a => a.AuthorId, b => b.MapFrom(c => c.PersonId))
                 .ForMember(a => a.DisplayName, b => b.MapFrom(c => c.DisplayName))
                 .ForMember(a => a.Avatar, b => b.MapFrom(c => c.Avatar))
-                .ForMember(a => a.Url, b => b.MapFrom(c => c.Url))
+                .ForMember(a => a.Url, b => b.MapFrom(c => c.ProfileName))
                 .ForMember(a => a.WorkAs, b => b.MapFrom(c => c.WorkAs))
                 .ForMember(a => a.Company, b => b.MapFrom(c => c.Company))
                  .ForMember(a => a.AuthorTypeId, b => b.MapFrom(c => 1));
@@ -36,7 +36,7 @@ namespace my8Client.Infrastructures
                 .ForMember(a => a.Avatar, b => b.MapFrom(c => c.Avatar))
                 .ForMember(a => a.WorkAs, b => b.MapFrom(c => c.WorkAs))
                 .ForMember(a => a.Company, b => b.MapFrom(c => c.Company))
-                .ForMember(a => a.Url, b => b.MapFrom(c => c.Url));
+                .ForMember(a => a.ProfileName, b => b.MapFrom(c => c.Url));
             mapper.CreateMap<Account, SignalRAccount>()
                 .ForMember(a => a.PersonId, b => b.MapFrom(c => c.PersonId));
             //<AppendNewHere>

@@ -37,8 +37,9 @@ namespace my8Client.Controllers
             string personId = _currentProcess.CurrentAccount.Account.PersonId;
             feedlike.Author = AutoMapper.Mapper.Map<Author>(_currentProcess.CurrentAccount.Account);
             feedlike.PersonId = personId;
-            var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "/feedlike/create", HttpMethod.Post,feedlike);
-            return ToResponse(result);
+            //var result = await _httpClient.SendRequestAsync<ResponseActionJsonModel>(Request, _clientConfig, "/feedlike/create", HttpMethod.Post,feedlike);
+            //return ToResponse(result);
+            return await PostAsync(Request, "/feedlike/create", null, feedlike);
         }
         [HttpPost]
         [Route("init")]
@@ -46,8 +47,5 @@ namespace my8Client.Controllers
         {
             return await PostAsync(Request,"/feeds/Init");
         }
-        //[HttpGet]
-        //[Route("/feed/startHubConnection")]
-        //public async Task<IActionResult>
     }
 }

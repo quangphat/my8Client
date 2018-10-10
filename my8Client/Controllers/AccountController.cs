@@ -41,7 +41,7 @@ namespace my8Client.Controllers
                     new Claim("DisplayName",person.DisplayName),
                     new Claim("PersonId",person.PersonId),
                     new Claim("WorkAs",person.WorkAs),
-                    new Claim("OwnerPage",person.Url)
+                    new Claim("OwnerPage",person.ProfileName)
              };
             var userIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

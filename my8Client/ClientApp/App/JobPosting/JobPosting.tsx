@@ -71,14 +71,14 @@ export class JobPosting extends React.Component<{}, JobPostingStates> {
                 render = <div className="Status_tagging" >
                     <span> cùng với </span>
                     {TaggedFriends.map((item, index) => {
-                        return index == 1 ? <span key={item.Id}> và <a href={item.Url}> {item.DisplayName}</a></span> : <a href={item.Url} key={item.Id} > {item.DisplayName}</a>
+                        return index == 1 ? <span key={item.Id}> và <a href={item.ProfileName}> {item.DisplayName}</a></span> : <a href={item.ProfileName} key={item.Id} > {item.DisplayName}</a>
                     })
                     }
                 </div>
             else
                 render = < div className="Status_tagging" >
                     <span> cùng với </span>
-                    <a href={TaggedFriends[0].Url}>{TaggedFriends[0].DisplayName}</a> và <span>{TaggedFriends.length - 1} người khác</span>
+                    <a href={TaggedFriends[0].ProfileName}>{TaggedFriends[0].DisplayName}</a> và <span>{TaggedFriends.length - 1} người khác</span>
                 </div>
         }
         return render;

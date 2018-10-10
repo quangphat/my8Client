@@ -11,8 +11,8 @@ export const PersonRepository = {
             return response;
         })
     },
-    GetPersonProfile: async (personName) => {
-        return Fetch.Get(`/persons/GetByUrl/${personName}`, null).then(response => {
+    GetPersonProfile: async (profileName) => {
+        return Fetch.Get(`/persons/GetByProfileName/${profileName}`, null).then(response => {
             return response;
         })
     },

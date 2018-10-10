@@ -51,7 +51,7 @@ export class LayoutNoFollowingPage extends React.Component<LayoutNoFollowingPage
                     </div>
                 </div>
                 <div className="info_user_header">
-                    <a href={'/profile/' + Account.Url} className="avartar_and_name">
+                    <a href={'/profile/' + Account.ProfileName} className="avartar_and_name">
                         <div className="avartar_and_name_avartar">
                             <img src="../../../../assets/images/avatar/avatar_main.png" />
                         </div>

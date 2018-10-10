@@ -48,10 +48,10 @@ namespace my8Client.Infrastructures
                     Claim claim = list.FirstOrDefault(p => p.Type == "Email");
                     person.Email = claim.Value;
                     person.DisplayName = list.FirstOrDefault((Claim a) => a.Type == "DisplayName")?.Value;
-                    person.Url = list.FirstOrDefault((Claim a) => a.Type == "Url")?.Value;
+                    person.ProfileName = list.FirstOrDefault((Claim a) => a.Type == "Url")?.Value;
                     person.PersonId = list.FirstOrDefault((Claim a) => a.Type == "PersonId")?.Value;
                     person.WorkAs = list.FirstOrDefault((Claim a) => a.Type == "WorkAs")?.Value;
-                    person.Url = list.FirstOrDefault((Claim a) => a.Type == "OwnerPage")?.Value;
+                    person.ProfileName = list.FirstOrDefault((Claim a) => a.Type == "OwnerPage")?.Value;
                     Account account = AutoMapper.Mapper.Map<Account>(person);
                     return account;
                 }

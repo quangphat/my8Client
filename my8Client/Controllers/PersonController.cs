@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -24,25 +24,30 @@ namespace my8Client.Controllers
         [Route("FollowingPages")]
         public async Task<IActionResult> Get()
         {
-            string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<Page>>>(Request, _clientConfig, $"/persons/{personId}/FollowingPages", HttpMethod.Get);
-            return ToResponse(result);
+            //string personId = _currentProcess.CurrentAccount.Account.PersonId;
+            //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<Page>>>(Request, _clientConfig, $"/persons/{personId}/FollowingPages", HttpMethod.Get);
+            //return ToResponse(result);
+            return await GetAsync(Request, "/persons/FollowingPages");
         }
         [HttpGet]
-        [Route("GetByUrl/{url}")]
-        public async Task<IActionResult> GetByUrl(string url)
+        [Route("GetByProfileName/{profileName}")]
+        public async Task<IActionResult> GetByUrl(string profileName)
         {
-            string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Person>>(Request, _clientConfig, $"/persons/GetbyUrl/{url}", HttpMethod.Get);
-            return ToResponse(result);
+            if (string.IsNullOrWhiteSpace(profileName))
+                return BadRequest("Dữ liệu không hợp lệ");
+            //string personId = _currentProcess.CurrentAccount.Account.PersonId;
+            //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Person>>(Request, _clientConfig, $"/persons/GetbyUrl/{url}", HttpMethod.Get);
+            //return ToResponse(result);
+            return await GetAsync(Request, $"/persons/GetByProfileName/{profileName}");
         }
         [HttpGet]
         [Route("TopFriend")]
         public async Task<IActionResult> GetTopFriend()
         {
-            string personId = _currentProcess.CurrentAccount.Account.PersonId;
-            var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<PersonAllin>>>(Request, _clientConfig, $"/persons/{personId}/TopInteractiveFriends", HttpMethod.Get);
-            return ToResponse(result);
+            //string personId = _currentProcess.CurrentAccount.Account.PersonId;
+            //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<List<PersonAllin>>>(Request, _clientConfig, $"/persons/{personId}/TopInteractiveFriends", HttpMethod.Get);
+            //return ToResponse(result);
+            return await GetAsync(Request, "/persons/TopInteractiveFriends");
         }
     }
 }
