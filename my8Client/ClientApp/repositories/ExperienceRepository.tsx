@@ -6,8 +6,8 @@ export const ExperienceRepository = {
             return response;
         })
     },
-    GetExperiencesByPerson: async (page, limit) => {
-        return Fetch.Get(`/Experiences/${page}/${limit}`).then(response => {
+    GetExperiencesByPerson: async (profileId: string, page: number, limit: number) => {
+        return Fetch.Get(`/Experiences/${profileId}/${page}/${limit}`).then(response => {
             return response;
         })
     }

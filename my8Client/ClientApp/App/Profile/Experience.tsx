@@ -11,23 +11,35 @@ import { Button } from '../../components/Button';
 import { Modal } from '../../components/Modal';
 import { InputCheckbox } from '../../components/InputCheckbox';
 import { Combobox } from '../../components/Combobox/Combobox'
+import { ScrollBottom } from '../../components/ScrollBottom/ScrollBottom'
 import { ExperienceItem } from '../../components/ExperienceItem/ExperienceItem'
 import * as Models from '../../Models'
+
+interface ExperienceProps {
+    person: Models.IShortPerson
+}
 
 interface ExperienceStates {
     isOpenPopupAddExperience: boolean,
     model: Models.IExperience,
     isLockButton: boolean,
-    experiences: Models.IExperience[]
+    experiences: Models.IExperience[],
+    paging: Models.IPaging,
+    isHasMore: boolean
 }
-export class Experience extends React.Component<{}, ExperienceStates> {
+export class Experience extends React.Component<ExperienceProps, ExperienceStates> {
     constructor(props) {
         super(props);
         this.state = {
             isOpenPopupAddExperience: false,
             model: null,
             isLockButton: false,
-            experiences:[]
+            experiences: [],
+            paging: {
+                skip: 0,
+                limit:10
+            },
+            isHasMore: false
         };
     }
 
@@ -39,12 +51,19 @@ export class Experience extends React.Component<{}, ExperienceStates> {
 
 
     public componentDidMount() {
-        this.getExperiences()
+        this.getExperiences(this.state.paging)
     };
-    private getExperiences() {
-        ExperienceRepository.GetExperiencesByPerson(0, 10).then(response => {
+    private getExperiences(paging: Models.IPaging) {
+        ExperienceRepository.GetExperiencesByPerson(this.props.person.Id, paging.skip, paging.limit).then(response => {
             let data = response.data.Datas
-            this.setState({ experiences: data })
+            let exs = this.state.experiences
+            if (exs == null) exs = []
+            exs = exs.concat(data)
+            let totalRecord = response.data.TotalRecord
+            let isHasmore = false
+            if ((paging.skip + 1) * paging.limit < totalRecord)
+                isHasmore = true
+            this.setState({ experiences: exs, isHasMore: isHasmore, paging: paging })
         })
     }
     private onEditModel(e, type: string) {
@@ -102,6 +121,13 @@ export class Experience extends React.Component<{}, ExperienceStates> {
                 this.setState({ isLockButton: false })
             }
         })
+    }
+    private onScrollBottom() {
+        if (this.state.isHasMore) {
+            let paging = this.state.paging
+            paging.skip += 1;
+            this.getExperiences(paging);
+        }
     }
     private renderAddExperiencePopup() {
         let thisYear = new Date().getFullYear()
@@ -205,6 +231,7 @@ export class Experience extends React.Component<{}, ExperienceStates> {
             </Button>
             {this.renderExperienceItem(this.state.experiences)}
             {this.renderAddExperiencePopup()}
+            <ScrollBottom onBottom={()=>this.onScrollBottom()} />
         </div>
     }
 }

@@ -4,6 +4,7 @@ export interface IExperience {
     CompanyName: string,
     Location: Location,
     FromDate: Date,
+    FromDateUnix: number,
     FromMonth?: number,
     FromYear?: number,
     isCurrentlyWorkHere: boolean,

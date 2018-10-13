@@ -16,7 +16,7 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
         super(props);
 
         this.state = {
-            experience : this.props.experience
+            experience: this.props.experience
         }
     }
     public componentDidMount() {
@@ -30,7 +30,8 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
 
     public render() {
         let experience = this.state.experience
-        let fromDate = new Date(experience.FromDate)
+
+        let fromDate = FormatHelper.getDateInUtc(experience.FromDate)
         let todate = new Date(experience.ToDate)
         let display = ''
         let elapsed = ''
@@ -44,8 +45,8 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
         elapsed = FormatHelper.getDuration(experience.FromDate, todate)
         return <div className="timeline-date-event">
             <div className="timeline-date-time">
-                {fromDate.getMonth()}/{fromDate.getFullYear()} - {display}. {elapsed}
-             </div>
+                {fromDate.getUTCMonth()+1}/{fromDate.getFullYear()} - {display}. {elapsed}
+            </div>
             <div className="timeline-date-event-icon-lineleft"></div>
             <div className="timeline-date-event-line-vertical"></div>
             <div className="timeline-date-event-content">
@@ -69,7 +70,7 @@ export class ExperienceItem extends React.Component<ExperienceItemProps, Experie
                     <a href="#">Thêm mô tả</a>
                     <ul className="nav-list-description">
                         <li>{experience.Description}
-                                        <a className="ml10"><i className="fa fa-pencil"></i></a>
+                            <a className="ml10"><i className="fa fa-pencil"></i></a>
                         </li>
                         <li>Vestibulum aliquam arcu in odio mattis, nec aliquet velit rutrum
                                         <a className="ml10"><i className="fa fa-pencil"></i></a>

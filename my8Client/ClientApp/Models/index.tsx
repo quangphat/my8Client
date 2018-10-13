@@ -15,3 +15,4 @@ export { INotification } from './INotification';
 export { IShortFeed } from './IShortFeed';
 export { IJobFunction } from './IJobFunction';
 export { IExperience } from './IExperience';
+export { IPaging } from './Share/IPaging';

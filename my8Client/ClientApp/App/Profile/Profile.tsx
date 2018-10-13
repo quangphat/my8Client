@@ -40,8 +40,7 @@ export class Profile extends React.Component<RouteComponentProps<any>, ProfileSt
     private getPersonProfile(profileName) {
         PersonRepository.GetPersonProfile(profileName).then(response => {
             if (response.error == null) {
-                let data = response.data as Models.IShortPerson
-                this.setState({ person: data })
+                this.setState({ person: response.data })
             }
         })
     }
@@ -54,7 +53,7 @@ export class Profile extends React.Component<RouteComponentProps<any>, ProfileSt
             let profileName = props.match.params.profilename
             if (profileName) {
                 this.getPersonProfile(profileName)
-               
+
             }
         }
     }
@@ -175,11 +174,11 @@ export class Profile extends React.Component<RouteComponentProps<any>, ProfileSt
     private renderTabContent() {
         let content = null
         if (this.state.hash == listTab[0].hash)
-            content = <Experience />
+            content = <Experience person={this.state.person} />
         //else if (this.state.hash == listTab[1].hash)
         //    content = null;
         else if (this.state.hash == listTab[1].hash)
-            content = <JobPostings person={this.state.person}/>;
+            content = <JobPostings person={this.state.person} />;
         else if (this.state.hash == listTab[2].hash)
             content = <ActivityPost person={this.state.person} />;
         else if (this.state.hash == listTab[3].hash)

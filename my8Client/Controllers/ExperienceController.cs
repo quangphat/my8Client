@@ -37,14 +37,14 @@ namespace my8Client.Controllers
             return ToResponse(result);
         }
         [HttpGet]
-        [Route("{page}/{limit}")]
-        public async Task<IActionResult> GetExperiencesByPerson(int page, int limit)
+        [Route("{profileId}/{page}/{limit}")]
+        public async Task<IActionResult> GetExperiencesByPerson(string profileId, int page, int limit)
         {
             string personId = _currentProcess.CurrentAccount.Account.PersonId;
             //var result = await _httpClient.SendRequestAsync<ResponseJsonModel<Pagination<Experience>>>(Request, _clientConfig, 
             //    $"/Experiences/{page}/{limit}/person/{personId}", HttpMethod.Get,null);
-            var x = await GetAsync(Request ,$"/Experiences/{page}/{limit}/person/{personId}");
-            return x;
+            return await GetAsync(Request ,$"/Experiences/{profileId}/{page}/{limit}");
+            
             //return ToResponse(result);
         }
     }

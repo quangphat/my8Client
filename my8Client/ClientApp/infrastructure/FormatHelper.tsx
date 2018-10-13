@@ -102,14 +102,17 @@ export const FormatDateTime = (inputDate: any, format: string = ""): string => {
         return MomentLocaleCalendar(inputDate);
     }
 }
-const getDate = (unix: number): Date => {
+export const getDateFromUnix = (unix: number): Date => {
     return new Date(unix * 1000)
+}
+export const getDateInUtc = (inputDate: Date): Date => {
+    return moment(inputDate, "YYYY-MM-DD").utc().toDate()
 }
 export const FormatDateTimeFromDate = (inputDate: Date, format: string = "DD/MM/YYYY hh:mm A", calendarFormatChange?: string): string => {
     return MomentLocaleCalendar(inputDate, format, calendarFormatChange);
 }
 export const FormatDateTimeFromTimespan = (inputDate: number, format: string = "DD/MM/YYYY hh:mm A", calendarFormatChange?: string): string => {
-    let d = getDate(inputDate)
+    let d = getDateFromUnix(inputDate)
     return MomentLocaleCalendar(d, format, calendarFormatChange);
 }
 export const getDuration = (fromDate: Date, toDate: Date, type: string = 'months'): string => {
