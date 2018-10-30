@@ -42,13 +42,14 @@ export class CropImage extends React.Component<{}, {}> {
         });
 
     }
+    reactCroppie = null
     public render(this) {
         let render = null;
         render = <div><img className="crop-area image-responsive" src='../../../../assets/images/banner.jpg' />
             <button className="btn btn-primary" onClick={this.resultantImage.bind(this)}>Image</button>
         </div >
 
-        render = <div><Croppie url='../../../../assets/images/banner.jpg' ref="reactCroppie" />
+        render = <div><Croppie url='../../../../assets/images/banner.jpg' ref={(reactCroppie)=>this.reactCroppie = reactCroppie} />
             <button className="btn btn-primary" onClick={this.resultantImage.bind(this)}>Image</button>
         </div>
         return render;

@@ -30,10 +30,12 @@
     <None Remove="ClientApp\App\Profile\JobPostings.tsx" />
     <None Remove="ClientApp\App\Profile\Setting.tsx" />
     <None Remove="ClientApp\components\ExperienceItem\ExperienceItem.tsx" />
+    <None Remove="ClientApp\components\Form\FormValidation.tsx" />
     <None Remove="ClientApp\components\Input\Input.tsx" />
     <None Remove="ClientApp\components\JobFeedBox\JobFeedBox.tsx" />
     <None Remove="ClientApp\components\ScrollBottom\ScrollBottom.tsx" />
     <None Remove="ClientApp\components\StatusFeedBox\StatusFeedBox.tsx" />
+    <None Remove="ClientApp\components\testxxx\Testxxx.tsx" />
     <None Remove="ClientApp\infrastructure\FormatHelper.tsx" />
     <None Remove="ClientApp\infrastructure\Utils.tsx" />
     <None Remove="ClientApp\Layout.tsx" />
@@ -81,10 +83,12 @@
     <TypeScriptCompile Include="ClientApp\App\Profile\JobPostings.tsx" />
     <TypeScriptCompile Include="ClientApp\App\Profile\Setting.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ExperienceItem\ExperienceItem.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\Form\FormValidation.tsx" />
     <TypeScriptCompile Include="ClientApp\components\Input\Input.tsx" />
     <TypeScriptCompile Include="ClientApp\components\JobFeedBox\JobFeedBox.tsx" />
     <TypeScriptCompile Include="ClientApp\components\ScrollBottom\ScrollBottom.tsx" />
     <TypeScriptCompile Include="ClientApp\components\StatusFeedBox\StatusFeedBox.tsx" />
+    <TypeScriptCompile Include="ClientApp\components\testxxx\testxxx.tsx" />
     <TypeScriptCompile Include="ClientApp\infrastructure\FormatHelper.tsx" />
     <TypeScriptCompile Include="ClientApp\infrastructure\Utils.tsx" />
     <TypeScriptCompile Include="ClientApp\Layout.tsx" />

@@ -179,11 +179,12 @@ export class PostStatusPopup extends React.Component<PostStatusPopupProps, PostS
         }
         return render;
     }
+    popup =null
     public render() {
         let isShowListFriend = this.state.isShowListFriend;
         let render = null
         let className = this.state.isOpening == true ? ' opening' : ''
-        render = <div ref="popup" id="popup" className={'modal' + className}>
+        render = <div ref={(popup)=>this.popup=popup} id="popup" className={'modal' + className}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="popup-header">
