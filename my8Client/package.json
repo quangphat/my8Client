@@ -25,7 +25,7 @@
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "numeral": "^2.0.6",
-    "react": "15.6.1",
+    "react": "16.6.0",
     "react-transition-group": "^1.2.1",
     "reactstrap": "^4.8.0",
     "react-croppie": "1.0.0",

@@ -194,6 +194,7 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
         }
         return render;
     }
+    refJobFunction =null
     public render() {
         let render = null;
         let status = this.state.allowInput;
@@ -234,7 +235,7 @@ export class InputTextTagJobFunction extends React.Component<InputTextTagJobFunc
                 : <div className="input-select">
                     <Input type="text" placeholder={this.props.placeHolder}
                         className="form-control"
-                        ref="refJobFunction"
+                        ref={(refJobFunction)=>this.refJobFunction=refJobFunction}
                         value={this.state.search}
                         autoFocus={true}
                         onFocus={() => this.handleOnFocus()}

@@ -182,7 +182,7 @@ export class InputTextTagFriend extends React.Component<InputTextTagFriendProps,
     private handleOnMouseOver( index) {
         this.setState({ selecting_index: index })
     }
-
+    friendTag = null
     public render() {
         let render = null;
         let is_selecting = this.state.is_selecting
@@ -217,9 +217,9 @@ export class InputTextTagFriend extends React.Component<InputTextTagFriendProps,
                 }
             </ul>
         }
-
+        
         render = <div className='input-text-tag' >
-            <input ref="friendTag"
+            <input ref={(friendTag)=>this.friendTag = friendTag}
                 defaultValue={this.state.search}
                 placeholder={this.props.placeholder}
                 onChange={(e) => this.handleOnChange(e.target.value)}

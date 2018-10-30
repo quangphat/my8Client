@@ -59,13 +59,14 @@ export class CommentBox extends React.Component<CommentBoxProps, CommentBoxState
         }
            
     }
+    commentBox =null
     public render() {
         let render = null;
         render = <div className="comment-box">
             <div className='comment-box-avatar'>
                 <img src={Utils.GetCurrentUserAvatar()} />
             </div>
-            {<div ref="commentBox" contentEditable={true}
+            {<div ref={(commentBox)=>this.commentBox=commentBox} contentEditable={true}
                 data-placeholder="Type a comment"
                 autoFocus={true} role="textbox"
                 onKeyDown={(e)=>this.OnKeydown(e)}

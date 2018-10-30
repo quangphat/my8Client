@@ -12,3 +12,4 @@ export { Combobox } from './Combobox/Combobox';
 export { Input } from './Input/Input';
 export { ExperienceItem } from './ExperienceItem/ExperienceItem';
 export { ScrollBottom } from './ScrollBottom/ScrollBottom';
+export { FormValidation } from './Form/FormValidation';

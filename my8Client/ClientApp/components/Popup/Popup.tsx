@@ -38,10 +38,11 @@ export class Popup extends React.Component<PopupProps, {}>{
     private handleClose(this) {
         this.props.onClose()
     }
+    popup =null
     public render(this) {
         let render = null
         let className = this.state.isOpening == true ? ' opening' : ''
-        render = <div ref="popup" id="popup" className={'modal' + className}>
+        render = <div ref={(popup)=>this.popup=popup} id="popup" className={'modal' + className}>
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="popup-header">
